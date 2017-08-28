@@ -10,10 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828161626) do
+ActiveRecord::Schema.define(version: 20170828182626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cities_factors", force: :cascade do |t|
+    t.bigint "city_id"
+    t.bigint "factor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_cities_factors_on_city_id"
+    t.index ["factor_id"], name: "index_cities_factors_on_factor_id"
+  end
+
+  create_table "cities_indices", force: :cascade do |t|
+    t.bigint "city_id"
+    t.bigint "index_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_cities_indices_on_city_id"
+    t.index ["index_id"], name: "index_cities_indices_on_index_id"
+  end
+
+  create_table "factors", force: :cascade do |t|
+    t.string "name"
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "indices", force: :cascade do |t|
+    t.string "name"
+    t.float "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "type"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,4 +78,20 @@ ActiveRecord::Schema.define(version: 20170828161626) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "users_factors", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "factor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["factor_id"], name: "index_users_factors_on_factor_id"
+    t.index ["user_id"], name: "index_users_factors_on_user_id"
+  end
+
+  add_foreign_key "cities_factors", "cities"
+  add_foreign_key "cities_factors", "factors"
+  add_foreign_key "cities_indices", "cities"
+  add_foreign_key "cities_indices", "indices"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "users_factors", "factors"
+  add_foreign_key "users_factors", "users"
 end
