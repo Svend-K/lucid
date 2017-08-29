@@ -51,8 +51,14 @@ GEM
       thor (~> 0.19)
     builder (3.2.3)
     byebug (9.1.0)
+    chartkick (2.2.4)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
+    countries (2.1.2)
+      i18n_data (~> 0.8.0)
+      money (~> 6.9)
+      sixarm_ruby_unaccent (~> 1.1)
+      unicode_utils (~> 1.4)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -61,6 +67,8 @@ GEM
       warden (~> 1.2.3)
     erubi (1.6.1)
     execjs (2.7.0)
+    faker (1.8.4)
+      i18n (~> 0.5)
     ffi (1.9.18)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -69,6 +77,7 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.6)
+    i18n_data (0.8.0)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -89,6 +98,8 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.2.0)
     minitest (5.10.3)
+    money (6.9.0)
+      i18n (>= 0.6.4, < 0.9)
     multi_json (1.12.1)
     nio4r (2.1.0)
     nokogiri (1.8.0)
@@ -153,6 +164,7 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
+    sixarm_ruby_unaccent (1.2.0)
     slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -173,6 +185,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    unicode_utils (1.4.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.1)
@@ -190,8 +203,10 @@ PLATFORMS
 DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass
-  bourbon
+  chartkick
+  countries
   devise
+  faker
   figaro
   font-awesome-sass
   jbuilder (~> 2.0)
