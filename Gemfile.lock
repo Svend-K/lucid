@@ -48,6 +48,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.3)
     byebug (9.1.0)
+    chartkick (2.2.4)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     devise (4.3.0)
@@ -58,6 +59,8 @@ GEM
       warden (~> 1.2.3)
     erubi (1.6.1)
     execjs (2.7.0)
+    faker (1.8.4)
+      i18n (~> 0.5)
     ffi (1.9.18)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -187,7 +190,9 @@ PLATFORMS
 DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass
+  chartkick
   devise
+  faker
   figaro
   font-awesome-sass
   jbuilder (~> 2.0)

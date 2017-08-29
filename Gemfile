@@ -1,6 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.3.4'
 
+#testing
+gem 'faker'
+
+#basic setup
+
 gem 'devise'
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
@@ -8,6 +13,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails', '5.1.3'
 gem 'redis'
+gem 'chartkick'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
