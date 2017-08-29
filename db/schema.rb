@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828182626) do
+ActiveRecord::Schema.define(version: 20170829155807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170828182626) do
     t.bigint "factor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "score"
     t.index ["city_id"], name: "index_cities_factors_on_city_id"
     t.index ["factor_id"], name: "index_cities_factors_on_factor_id"
   end
@@ -35,20 +36,35 @@ ActiveRecord::Schema.define(version: 20170828182626) do
     t.bigint "index_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "score"
     t.index ["city_id"], name: "index_cities_indices_on_city_id"
     t.index ["index_id"], name: "index_cities_indices_on_index_id"
   end
 
+  create_table "cities_items", force: :cascade do |t|
+    t.float "price"
+    t.bigint "city_id"
+    t.bigint "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_cities_items_on_city_id"
+    t.index ["item_id"], name: "index_cities_items_on_item_id"
+  end
+
   create_table "factors", force: :cascade do |t|
     t.string "name"
-    t.float "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "indices", force: :cascade do |t|
     t.string "name"
-    t.float "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -91,6 +107,8 @@ ActiveRecord::Schema.define(version: 20170828182626) do
   add_foreign_key "cities_factors", "factors"
   add_foreign_key "cities_indices", "cities"
   add_foreign_key "cities_indices", "indices"
+  add_foreign_key "cities_items", "cities"
+  add_foreign_key "cities_items", "items"
   add_foreign_key "profiles", "users"
   add_foreign_key "users_factors", "factors"
   add_foreign_key "users_factors", "users"

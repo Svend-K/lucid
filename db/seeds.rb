@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+Index.create!(name: 'purchasing_power_incl_rent_index')
 
 50.times do
   City.create({
@@ -24,4 +25,3 @@ end
     index_id: (1..50).to_a.sample,
     city_id: (1..50).to_a.sample
   })
-end
