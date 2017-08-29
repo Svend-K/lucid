@@ -5,15 +5,19 @@
 .banner-content {
   text-align: center;
   color:white;
+  top: 100px;
 }
 
 .particle-network-animation {
   position: fixed;
+  z-index: +99;
   top: 70px;
   left: 0;
   right: 0;
   height: 100vh;
-  background-color: #171717;
+  background: #C04848;
+  background: -webkit-linear-gradient(to right, #480048, #C04848);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #480048, #C04848); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   &::before {
     z-index: -2;
@@ -23,10 +27,6 @@
     right: 0;
     bottom: 0;
     left: 0;
-    // background-image: url(http://web.frfr.me/dev/world-map-optimized.jpg);
-    // background-image: url(https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX1943113.jpg);
-    background-color: purple;
-    background-position: center center;
     background-size: cover;
     opacity: 0.2;
   }
@@ -36,7 +36,6 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.025), transparent);
 }
 $duration: 25s;
 .glow-1 {
