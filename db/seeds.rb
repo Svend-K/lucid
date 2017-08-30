@@ -9,19 +9,19 @@
 
 Index.create!(name: 'purchasing_power_incl_rent_index')
 
-50.times do
-  City.create({
-    name: Faker::Address.city,
-  })
+# 50.times do
+#   City.create({
+#     name: Faker::Address.city,
+#   })
 
-  Index.create({
-    name: Faker::Company.name,
-    score: rand(1..10)
-  })
-end
+#   Index.create({
+#     name: Faker::Company.name,
+#     score: rand(1..10)
+#   })
+# end
 
-50.times do
-  CitiesIndex.create({
-    index_id: (1..50).to_a.sample,
-    city_id: (1..50).to_a.sample
-  })
+# 50.times do
+#   CitiesIndex.create({
+#     index_id: (1..50).to_a.sample,
+#     city_id: (1..50).to_a.sample
+#   })
