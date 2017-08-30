@@ -16,13 +16,11 @@ class PagesController < ApplicationController
     @current_city = get_city(params['current_city'])
     @destination_city = get_city(params['destination_city'])
 
-    # purchasing_power_incl_rent_index
-    local_purch_pow_index = Index.find_by(name: 'purchasing_power_incl_rent_index')
+    @current_city_indices = get_indices_for_city(@current_city)
+    @destination_city_indices = get_indices_for_city(@destination_city)
 
-    @current_city_local_purch_pow = get_index_for_city(@current_city, local_purch_pow_index)
-    @destination_city_local_purch_pow = get_index_for_city(@destination_city, local_purch_pow_index)
-
-    # @current_city_prices = get_prices_for_city(@current_city)
+    @current_city_prices = get_prices_for_city(@current_city)
+    @destination_city_prices = get_prices_for_city(@destination_city)
   end
 
   private
@@ -33,7 +31,7 @@ class PagesController < ApplicationController
   end
 
   def get_prices(city)
-    prices_url = "/api/city_prices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}"
+    prices_url = "/api/city_prices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}&currency=EUR"
     prices_json = get_json_from(prices_url)
   end
 
@@ -53,30 +51,47 @@ class PagesController < ApplicationController
     end
   end
 
-  def get_index_for_city(city, index)
-    city_local_purch_pow_index = CitiesIndex.find_by(city_id: city.id, index_id: index.id)
-    if city_local_purch_pow_index.nil?
-      city_indices = get_indices(city)
-      city_local_purch_pow = CitiesIndex.create!(city_id: city.id, index_id: index.id, score: city_indices['purchasing_power_incl_rent_index'])
-    else
-      city_local_purch_pow = city_local_purch_pow_index
+  def get_indices_for_city(city)
+    @city_indices = []
+
+    unless CitiesIndex.find_by(city_id: city.id).nil?
+      return @city_indices = CitiesIndex.where(city_id: city.id)
     end
+
+    indices = get_indices(city)
+    indices.each do |i, v|
+
+      if Index.find_by(name: i).nil?
+        current_index = Index.create!(name: i)
+      else
+        current_index = Index.find_by(name: i)
+      end
+
+      current_cities_index = CitiesIndex.create!(city_id: city.id, index_id: current_index.id, score: v)
+
+      @city_indices << current_cities_index
+    end
+    return @city_indices
   end
 
-  # def get_prices_for_city(city)
-  #   @cities_items = []
+  def get_prices_for_city(city)
+    @city_items = []
 
-  #   prices = get_prices(city)['prices']
-  #   prices.each do |p|
+    unless CitiesItem.find_by(city_id: city.id).nil?
+      return @city_items = CitiesItem.where(city_id: city.id)
+    end
 
-  #     if Item.find_by(name: p['item_name']).nil?
-  #       current_item = Item.create!(name: p['item_name'])
-  #     else
-  #       current_item = Item.find_by(name: p['item_name'])
-  #     end
+    prices = get_prices(city)
+    prices['prices'].each do |p|
 
-  #     @cities_items << CitiesItem.create!(city_id: city.id, item_id: current_item.id, price: p['average_price'])
-  #   end
-  # end
+      if Item.find_by(name: p['item_name']).nil?
+        current_item = Item.create!(name: p['item_name'])
+      else
+        current_item = Item.find_by(name: p['item_name'])
+      end
 
+      @city_items << CitiesItem.create!(city_id: city.id, item_id: current_item.id, price: p['average_price'])
+    end
+    return @city_items
+  end
 end
