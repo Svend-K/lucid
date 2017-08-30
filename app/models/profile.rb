@@ -1,3 +1,5 @@
 class Profile < ApplicationRecord
-  belongs_to :user
+  has_many :factors, through: :profiles_factor
+
+  validates :name, uniqueness: true
 end

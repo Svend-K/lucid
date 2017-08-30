@@ -24,3 +24,24 @@
 #     city_id: (1..50).to_a.sample
 #   })
 # end
+
+attr = {
+       profile: [{name: 'worker'},
+                 {name: 'student'},
+                 {name: 'family'}],
+       factor: [{name: 'burocracy'},
+                {name: 'friendly to foreigners'},
+                {name: 'fun'},
+                {name: 'nightlife'},
+                {name: 'english speaking'},
+                {name: 'walkability'},
+                {name: 'free wi-fi accessibility'},
+                {name: 'public transport'},
+                {name: 'high speed internet availability'},
+                {name: 'access to rent'},
+                {name: 'quality of education'}]
+       }
+
+Profile.create!(attr[:profile])
+Factor.create!(attr[:factor])
+
