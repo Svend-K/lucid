@@ -1,0 +1,23 @@
+<h1>Pages#Result</h1>
+
+<h2>Current city: <%= @current_city.name %></h2>
+<% @current_city_indices.each do |index| %>
+  <p><%= index.index.name %></p>
+  <p><%= index.score %></p>
+<% end %>
+
+<% @current_city_prices.each do |p| %>
+  <p><%= p.item.name %></p>
+  <p><%= p.price %></p>
+<% end %>
+
+<h2>Destination city: <%= @destination_city.name %></h2>
+<% @destination_city_indices.each do |index| %>
+  <p><%= index.city.name %></p>
+  <p><%= index.score %></p>
+<% end %>
+
+<% @destination_city_prices.each do |p| %>
+  <p><%= p.item.name %></p>
+  <p><%= p.price %></p>
+<% end %>

@@ -7,21 +7,20 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+# 50.times do
+#   City.create({
+#     name: Faker::Address.city,
+#   })
 
-50.times do
-  City.create({
-    name: Faker::Address.city,
-  })
+#   Index.create({
+#     name: Faker::Company.name,
+#     score: rand(1..10)
+#   })
+# end
 
-  Index.create({
-    name: Faker::Company.name,
-    score: rand(1..10)
-  })
-end
-
-50.times do
-  CitiesIndex.create({
-    index_id: (1..50).to_a.sample,
-    city_id: (1..50).to_a.sample
-  })
-end
+# 50.times do
+#   CitiesIndex.create({
+#     index_id: (1..50).to_a.sample,
+#     city_id: (1..50).to_a.sample
+#   })
+# end
