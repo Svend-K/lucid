@@ -1,6 +1,10 @@
 <% cur_array = [] %>
 <% dest_array = [] %>
 
+
+<h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
+
+
 <h2>Current city: <%= @current_city.name %></h2>
 
 <% @current_city_indices.each do |index| %>
@@ -13,8 +17,8 @@
 <% end %>
 
 <% @current_city_prices.each do |p| %>
-  <p><%= p.item.name %></p>
-  <p><%= p.price %></p>
+  <p><% p.item.name %></p>
+  <p><% p.price %></p>
 <% end %>
 
 <h2>Destination city: <%= @destination_city.name %></h2>
@@ -29,9 +33,13 @@
 <% end %>
 
 <% @destination_city_prices.each do |p| %>
-  <p><% p.item.name %></p>
-  <p><% p.price %></p>
+
+  <p><%= p.item.name %></p>
+  <p><%= p.price %></p>
 <% end %>
+
+<%= dest_array %>
+<%= cur_array %>
 
 <h2>Quality of life</h2>
 <%= line_chart [
