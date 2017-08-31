@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829155807) do
+ActiveRecord::Schema.define(version: 20170830192634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,11 +70,18 @@ ActiveRecord::Schema.define(version: 20170829155807) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.string "type"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_profiles_on_user_id"
+    t.string "name"
+  end
+
+  create_table "profiles_factors", force: :cascade do |t|
+    t.bigint "profile_id"
+    t.bigint "factor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["factor_id"], name: "index_profiles_factors_on_factor_id"
+    t.index ["profile_id"], name: "index_profiles_factors_on_profile_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -94,22 +101,12 @@ ActiveRecord::Schema.define(version: 20170829155807) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_factors", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "factor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["factor_id"], name: "index_users_factors_on_factor_id"
-    t.index ["user_id"], name: "index_users_factors_on_user_id"
-  end
-
   add_foreign_key "cities_factors", "cities"
   add_foreign_key "cities_factors", "factors"
   add_foreign_key "cities_indices", "cities"
   add_foreign_key "cities_indices", "indices"
   add_foreign_key "cities_items", "cities"
   add_foreign_key "cities_items", "items"
-  add_foreign_key "profiles", "users"
-  add_foreign_key "users_factors", "factors"
-  add_foreign_key "users_factors", "users"
+  add_foreign_key "profiles_factors", "factors"
+  add_foreign_key "profiles_factors", "profiles"
 end

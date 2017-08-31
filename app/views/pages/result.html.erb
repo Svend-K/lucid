@@ -1,3 +1,39 @@
+<h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
+
+
+<h2>Current city: <%= @current_city.name %></h2>
+
+<% @current_city_indices.each do |index| %>
+  <% sub_array_cur = Array.new %>
+  <p><% index.index.name %></p>
+  <% sub_array_cur << index.index.name %>
+  <p><% index.score %></p>
+  <% sub_array_cur << index.score %>
+  <% cur_array << sub_array_cur %>
+<% end %>
+
+<% @current_city_prices.each do |p| %>
+  <p><% p.item.name %></p>
+  <p><% p.price %></p>
+<% end %>
+
+<h2>Destination city: <%= @destination_city.name %></h2>
+
+<% @destination_city_indices.each do |index| %>
+  <% sub_array_dest = Array.new %>
+  <p><% index.city.name %></p>
+  <% sub_array_dest << index.index.name %>
+  <p><% index.score %></p>
+  <% sub_array_dest << index.score %>
+  <% dest_array << sub_array_dest %>
+<% end %>
+
+<% @destination_city_prices.each do |p| %>
+
+  <p><%= p.item.name %></p>
+  <p><%= p.price %></p>
+<% end %>
+
 <h2>Quality of life</h2>
 <%= line_chart [
     {name: @current_city.name, data: @current_city_graph_lifequality},
