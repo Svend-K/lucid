@@ -2,15 +2,28 @@
   <div class="map-filter"></div>
   <div class="map-form">
     <h1>Lucid</h1>
-    <h2>Compare cities intelligently</h2>
-
+    <h2>Find the best place to live intelligently</h2>
+    <!-- <p>Compare cities on quality of life, costs of living, salaries and more</p> -->
     <form action="/result" method="GET" class="form-inline">
       <div class="form-group">
         <input name="current_city" type="text" id="current_city" placeholder="Where do you live?" class="form-control">
       </div>
       <div class="form-group">
-        <input name="destination_city" type="text" id="destination_city" placeholder="Where do you go?" class="form-control">
+        <input name="destination_city" type="text" id="destination_city" placeholder="Where are you headed?" class="form-control">
       </div>
+      <div class="form-group">
+        <input name="monthly_spending" type="text" id="current_city" placeholder="Your monthly spending" class="form-control">
+      </div>
+      <div class="form-group">
+        <!-- <input name="user_profile" type="text" id="user_profile" placeholder="Your monthly spending" class="form-control"> -->
+        <select class="form-control" name="user_profile">
+          <option value="freelancer">Freelancer</option>
+          <option value="student">Student</option>
+          <option value="family">Family</option>
+        </select>
+      </div>
+
+      <br><br>
       <input type="submit" value="Compare" class="btn btn-primary">
     </form>
   </div>
@@ -30,3 +43,51 @@
   <div class="point japon tippy" title="Japon"></div>
   <div class="point australia tippy" title="Australia"></div>
 </div>
+
+
+<%= content_for :after_js do %>
+<script>
+
+  var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+      var matches, substringRegex;
+
+      // an array that will be populated with substring matches
+      matches = [];
+
+      // regex used to determine if a string contains the substring `q`
+      substrRegex = new RegExp(q, 'i');
+
+      // iterate through the pool of strings and for any string that
+      // contains the substring `q`, add it to the `matches` array
+      $.each(strs, function(i, str) {
+        if (substrRegex.test(str)) {
+          matches.push(str);
+        }
+      });
+
+      cb(matches);
+    };
+  };
+
+  var cities = <%= City.all.map { |c| c.name }.to_json.html_safe %>;
+  // var cities = ["Paris", "Berlin"];
+
+
+  $('#current_city, #destination_city').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  {
+    name: 'cities',
+    source: substringMatcher(cities)
+  });
+</script>
+<% end %>
+
+
+
+
+
+
