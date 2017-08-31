@@ -1,3 +1,19 @@
+<h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
+
+<h2>Quality of life</h2>
+<%= line_chart [
+    {name: @current_city.name, data: @current_city_graph_lifequality},
+    {name: @destination_city.name, data: @destination_city_graph_lifequality}
+  ]
+%>
+
+<h2>Cost and PP</h2>
+<%= line_chart [
+    {name: @current_city.name, data: @current_city_graph_quantitative},
+    {name: @destination_city.name, data: @destination_city_graph_quantitative}
+  ]
+%>
+
 <%= @current_city.name %>
 
 <% @current_city.cities_factor.each do |f| %>
@@ -9,5 +25,3 @@
     </div>
   </div>
 <% end %>
-
-

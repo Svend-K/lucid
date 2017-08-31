@@ -3,15 +3,19 @@
   <div class="map-form">
     <h1>Lucid</h1>
     <h2>Compare cities intelligently</h2>
-    <div class="search-form">
-      <form action="/result" method="GET">
-        Current city: <input name="current_city" type="text" required>
-        Destination city: <input name="destination_city" type="text" required>
-        <input type="submit">
-      </form>
-    </div>
+
+    <form action="/result" method="GET" class="form-inline">
+      <div class="form-group">
+        <input name="current_city" type="text" id="current_city" placeholder="Where do you live?" class="form-control">
+      </div>
+      <div class="form-group">
+        <input name="destination_city" type="text" id="destination_city" placeholder="Where do you go?" class="form-control">
+      </div>
+      <input type="submit" value="Compare" class="btn btn-primary">
+    </form>
   </div>
-  <img src="http://res.cloudinary.com/slzr/image/upload/v1500321012/world-map-1500_vvekl5.png">
+
+  <div class="map-bg" style="background-image: url(http://res.cloudinary.com/slzr/image/upload/v1500321012/world-map-1500_vvekl5.png"></div>
   <div class="point venezuela tippy" title="Venezuela"></div>
   <div class="point brasil tippy" title="Brasil"></div>
   <div class="point argentina tippy" title="Argentina"></div>
