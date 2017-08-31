@@ -12,9 +12,13 @@ class PagesController < ApplicationController
   end
 
   def result
-
     @current_city = get_city(params['current_city'])
     @destination_city = get_city(params['destination_city'])
+
+    # there's no city like that in numbeo db OR cannot add same cities THEN note the user
+    if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
+      return redirect_to root_path
+    end
 
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
@@ -45,13 +49,22 @@ class PagesController < ApplicationController
   end
 
   def get_city(name)
-    # check if city already exists, save if not
-    downcase_name = name.downcase
-    if City.find_by(name: downcase_name).nil?
-      city = City.create!(name: downcase_name)
+    if City.find_by(name: name.downcase).nil?
+      full_url = BASE_URL + "/api/cities?api_key=#{NUMBEO_API_KEY}"
+      serialized = open(full_url).read
+      json = JSON.parse(serialized)
+
+      json_cities = json['cities']
+      json_cities.each do |c|
+        # raise
+        if name.capitalize == c['city']
+          city = City.create!(name: name.downcase)
+        end
+      end
     else
-      city = City.find_by(name: downcase_name)
+      city = City.find_by(name: name.downcase)
     end
+    return city
   end
 
   def get_indices_for_city(city)
