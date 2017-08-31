@@ -20,11 +20,11 @@ class PagesController < ApplicationController
       return redirect_to root_path
     end
 
-    @current_city_indices = get_indices_for_city(@current_city)
-    @destination_city_indices = get_indices_for_city(@destination_city)
+    get_indices_for_city(@current_city)
+    get_indices_for_city(@destination_city)
 
-    @current_city_prices = get_prices_for_city(@current_city)
-    @destination_city_prices = get_prices_for_city(@destination_city)
+    get_items_for_city(@current_city)
+    get_items_for_city(@destination_city)
   end
 
   private
@@ -53,24 +53,21 @@ class PagesController < ApplicationController
 
       json_cities = json['cities']
       json_cities.each do |c|
-        # raise
         if name.capitalize == c['city']
-          city = City.create!(name: name.downcase)
+          return City.create!(name: name.downcase)
         end
       end
     else
-      city = City.find_by(name: name.downcase)
+      return City.find_by(name: name.downcase)
     end
-    return city
   end
 
   def get_indices_for_city(city)
-    @city_indices = []
-
     unless CitiesIndex.find_by(city_id: city.id).nil?
       return @city_indices = CitiesIndex.where(city_id: city.id)
     end
 
+    @city_indices = []
     indices = get_indices(city)
     indices.each do |i, v|
 
@@ -87,7 +84,7 @@ class PagesController < ApplicationController
     return @city_indices
   end
 
-  def get_prices_for_city(city)
+  def get_items_for_city(city)
     @city_items = []
 
     unless CitiesItem.find_by(city_id: city.id).nil?
