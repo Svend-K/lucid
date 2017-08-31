@@ -12,28 +12,25 @@ class PagesController < ApplicationController
   end
 
   def result
-    @current_city = get_city(params['current_city'])
-    @destination_city = get_city(params['destination_city'])
-
-    @current_city_indices_raw = get_indices_for_city(@current_city)
-    @destination_city_indices_raw = get_indices_for_city(@destination_city)
+    @current_city = get_city(params[:current_city])
+    @destination_city = get_city(params[:destination_city])
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
       return redirect_to root_path
     end
 
-    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices_raw).values_at(0, 1, 6, 10, 12, 16)
-    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices_raw).values_at(0, 1, 6, 10, 12, 16)
+    get_items_for_city(@current_city)
+    get_items_for_city(@destination_city)
 
-    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices_raw).values_at(2, 3, 4, 8, 11, 14)
-    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices_raw).values_at(2, 3, 4, 8, 11, 14)
+    current_city_indices = get_indices_for_city(@current_city)
+    destination_city_indices = get_indices_for_city(@destination_city)
 
-    @current_city_indices = get_indices_for_city(@current_city)
-    @destination_city_indices = get_indices_for_city(@destination_city)
+    @current_city_graph_lifequality = get_indices_for_chart(current_city_indices).values_at(0, 1, 6, 10, 12, 16)
+    @destination_city_graph_lifequality = get_indices_for_chart(destination_city_indices).values_at(0, 1, 6, 10, 12, 16)
 
-    @current_city_prices = get_prices_for_city(@current_city)
-    @destination_city_prices = get_prices_for_city(@destination_city)
+    @current_city_graph_quantitative = get_indices_for_chart(current_city_indices).values_at(2, 3, 4, 8, 11, 14)
+    @destination_city_graph_quantitative = get_indices_for_chart(destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
   end
@@ -57,31 +54,26 @@ class PagesController < ApplicationController
   end
 
   def get_city(name)
-    if City.find_by(name: name.downcase).nil?
+    if City.find_by(name: name.downcase)
+      city =  City.find_by(name: name.downcase)
+    else
       full_url = BASE_URL + "/api/cities?api_key=#{NUMBEO_API_KEY}"
       serialized = open(full_url).read
       json = JSON.parse(serialized)
-
       json_cities = json['cities']
-      json_cities.each do |c|
-        # raise
-        if name.capitalize == c['city']
-          city = City.create!(name: name.downcase)
-        end
+      if json_cities.any? { |c| name.capitalize == c['city'] }
+        city = City.create!(name: name.downcase)
       end
-    else
-      city = City.find_by(name: name.downcase)
     end
     return city
   end
 
   def get_indices_for_city(city)
-    @city_indices = []
-
     unless CitiesIndex.find_by(city_id: city.id).nil?
       return @city_indices = CitiesIndex.where(city_id: city.id)
     end
 
+    @city_indices = []
     indices = get_indices(city)
     indices.each do |i, v|
 
@@ -98,11 +90,7 @@ class PagesController < ApplicationController
     return @city_indices
   end
 
-  def get_indices_for_chart(city_indices)
-    city_indices.map { |index| [index.index.name, index.score] }
-  end
-
-  def get_prices_for_city(city)
+  def get_items_for_city(city)
     @city_items = []
 
     unless CitiesItem.find_by(city_id: city.id).nil?
@@ -133,5 +121,9 @@ class PagesController < ApplicationController
     else
       destination_city.name
     end
+  end
+
+  def get_indices_for_chart(city_indices)
+    city_indices.map { |index| [index.index.name, index.score] }
   end
 end

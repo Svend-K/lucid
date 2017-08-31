@@ -35,9 +35,32 @@ attr = {
                           {profile_id: 3, factor_id: 5},
                           {profile_id: 3, factor_id: 2},
                           {profile_id: 3, factor_id: 1},
-                          {profile_id: 3, factor_id: 3}]
+                          {profile_id: 3, factor_id: 3}],
+        cities_factor: [{city_id: 1, factor_id: 1, score: rand()},
+                        {city_id: 1, factor_id: 2, score: rand()},
+                        {city_id: 1, factor_id: 3, score: rand()},
+                        {city_id: 1, factor_id: 4, score: rand()},
+                        {city_id: 1, factor_id: 5, score: rand()},
+                        {city_id: 1, factor_id: 6, score: rand()},
+                        {city_id: 1, factor_id: 7, score: rand()},
+                        {city_id: 1, factor_id: 8, score: rand()},
+                        {city_id: 1, factor_id: 9, score: rand()},
+                        {city_id: 1, factor_id: 10, score: rand()},
+                        {city_id: 1, factor_id: 11, score: rand()},
+                        {city_id: 2, factor_id: 1, score: rand()},
+                        {city_id: 2, factor_id: 2, score: rand()},
+                        {city_id: 2, factor_id: 3, score: rand()},
+                        {city_id: 2, factor_id: 4, score: rand()},
+                        {city_id: 2, factor_id: 5, score: rand()},
+                        {city_id: 2, factor_id: 6, score: rand()},
+                        {city_id: 2, factor_id: 7, score: rand()},
+                        {city_id: 2, factor_id: 8, score: rand()},
+                        {city_id: 2, factor_id: 9, score: rand()},
+                        {city_id: 2, factor_id: 10, score: rand()},
+                        {city_id: 2, factor_id: 11, score: rand()}]
        }
 
 Profile.create!(attr[:profile])
 Factor.create!(attr[:factor])
 ProfilesFactor.create!(attr[:profiles_factor])
+CitiesFactor.create!(attr[:cities_factor])
