@@ -21,6 +21,9 @@ class PagesController < ApplicationController
 
     @current_city_prices = get_prices_for_city(@current_city)
     @destination_city_prices = get_prices_for_city(@destination_city)
+
+    @recommended_city = get_recommended_city(@current_city, @destination_city)
+
   end
 
   private
@@ -93,5 +96,17 @@ class PagesController < ApplicationController
       @city_items << CitiesItem.create!(city_id: city.id, item_id: current_item.id, price: p['average_price'])
     end
     return @city_items
+  end
+
+  def get_recommended_city(current_city, destination_city)
+    index = Index.find_by(name: "purchasing_power_incl_rent_index")
+    current_city_score = CitiesIndex.find_by(index_id: index.id, city_id:current_city.id).score
+    destination_city_score = CitiesIndex.find_by(index_id: index.id, city_id:destination_city.id).score
+
+    if current_city_score > destination_city_score
+      current_city.name
+    else
+      destination_city.name
+    end
   end
 end
