@@ -23,17 +23,17 @@ class PagesController < ApplicationController
       return redirect_to root_path
     end
 
+    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices_raw).values_at(0, 1, 6, 10, 12, 16)
+    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices_raw).values_at(0, 1, 6, 10, 12, 16)
+
+    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices_raw).values_at(2, 3, 4, 8, 11, 14)
+    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices_raw).values_at(2, 3, 4, 8, 11, 14)
+
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
 
     @current_city_prices = get_prices_for_city(@current_city)
     @destination_city_prices = get_prices_for_city(@destination_city)
-
-    @current_city_graph_lifequality = graphing_current_city.values_at(0, 1, 6, 10, 12, 16)
-    @destination_city_graph_lifequality = graphing_destination_city.values_at(0, 1, 6, 10, 12, 16)
-
-    @current_city_graph_quantitative = graphing_current_city.values_at(2, 3, 4, 8, 11, 14)
-    @destination_city_quantitative = graphing_destination_city.values_at(2, 3, 4, 8, 11, 14)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
   end
@@ -98,6 +98,10 @@ class PagesController < ApplicationController
     return @city_indices
   end
 
+  def get_indices_for_chart(city_indices)
+    city_indices.map { |index| [index.index.name, index.score] }
+  end
+
   def get_prices_for_city(city)
     @city_items = []
 
@@ -117,28 +121,6 @@ class PagesController < ApplicationController
       @city_items << CitiesItem.create!(city_id: city.id, item_id: current_item.id, price: p['average_price'])
     end
     return @city_items
-  end
-
-  def graphing_current_city
-    @cur_indices_array = []
-    @current_city_indices_raw.each do |index|
-      cur_index_array = Array.new
-      cur_index_array << index.index.name
-      cur_index_array << index.score
-      @cur_indices_array << cur_index_array
-    end
-    return @cur_indices_array
-  end
-
-  def graphing_destination_city
-    @dest_indices_array = []
-    @destination_city_indices_raw.each do |index|
-      dest_index_array = Array.new
-      dest_index_array << index.index.name
-      dest_index_array << index.score
-      @dest_indices_array << dest_index_array
-    end
-    return @dest_indices_array
   end
 
   def get_recommended_city(current_city, destination_city)
