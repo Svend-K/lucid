@@ -1,23 +1,17 @@
-<h1>Pages#Result</h1>
-
 <% cur_array = [] %>
 <% dest_array = [] %>
 
 
 <h2>Current city: <%= @current_city.name %></h2>
+
 <% @current_city_indices.each do |index| %>
-
   <% sub_array_cur = Array.new %>
-
   <p><% index.index.name %></p>
   <% sub_array_cur << index.index.name %>
-
   <p><% index.score %></p>
   <% sub_array_cur << index.score %>
-
   <% cur_array << sub_array_cur %>
 <% end %>
-<%= cur_array %>
 
 <% @current_city_prices.each do |p| %>
   <p><%= p.item.name %></p>
@@ -25,32 +19,31 @@
 <% end %>
 
 <h2>Destination city: <%= @destination_city.name %></h2>
+
 <% @destination_city_indices.each do |index| %>
-
-   <% sub_array_dest = Array.new %>
-
+  <% sub_array_dest = Array.new %>
   <p><% index.city.name %></p>
   <% sub_array_dest << index.index.name %>
-
   <p><% index.score %></p>
   <% sub_array_dest << index.score %>
-
   <% dest_array << sub_array_dest %>
 <% end %>
-<%= dest_array %>
 
 <% @destination_city_prices.each do |p| %>
   <p><% p.item.name %></p>
   <p><% p.price %></p>
 <% end %>
 
-
 <h2>Quality of life</h2>
 <%= line_chart [
-    {name: @current_city.name, data: cur_array.slice(1, 2, 7, 11, 13, 17)},
-    {name: @destination_city.name, data: dest_array.slice(1, 2, 7, 11, 13, 17)}
+    {name: @current_city.name, data: cur_array.values_at(0, 2, 6, 10, 12, 16)},
+    {name: @destination_city.name, data: dest_array.values_at(0, 2, 6, 10, 12, 16)}
   ]
 %>
 
-<% paris_data = [["crime", 23.3], ["prices", 13.3], ["happyness", 5.3]]  %>
-<% london_data = [["crime", 33.3], ["prices", 53.3], ["happyness", 1.3]] %>
+<h2>Cost and PP</h2>
+<%= line_chart [
+    {name: @current_city.name, data: cur_array.values_at(2, 3, 4, 8, 11, 14)},
+    {name: @destination_city.name, data: dest_array.values_at(2, 3, 4, 8, 11, 14)}
+  ]
+%>
