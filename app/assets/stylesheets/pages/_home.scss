@@ -7,14 +7,17 @@
 
 .banner-content {
   text-align: center;
-  color:white;
+  color: white;
   top: 100px;
+}
+
+.banner-content form {
+  color: black;
 }
 
 .search-form {
   text-align:center;
 }
-
 
 .particle-network-animation {
   position: fixed;
