@@ -17,7 +17,7 @@ class PagesController < ApplicationController
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
-      return redirect_to root_path
+      redirect_to root_path and return
     end
 
     get_items_for_city(@current_city)
