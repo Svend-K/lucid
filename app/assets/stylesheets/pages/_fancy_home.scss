@@ -81,7 +81,7 @@ $primary: #00acc1;
   margin-left: -40%;
   // background-color: rgba(62,194,210, 0.2);
   background-color: transparent;
-  box-shadow: 4px 4px 6px 6px rgba(0,0,0,0.2);
+  box-shadow: 3px 3px 4px 4px rgba(0,0,0,0.2);
   // border: 2px solid;
   border-radius: 25px;
   padding: 30px;
@@ -90,6 +90,12 @@ $primary: #00acc1;
   margin-top: -150px;
   h1 {
     margin-top: 0px;
+  }
+  .btn.btn-primary {
+    background-color:rgb(103, 207, 220);
+    border-radius: 10px;
+    opacity: 0.9;
+    color: black;
   }
 }
 
