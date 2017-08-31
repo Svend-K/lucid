@@ -1,7 +1,3 @@
-<% cur_array = [] %>
-<% dest_array = [] %>
-
-
 <h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
 
 
@@ -38,19 +34,16 @@
   <p><%= p.price %></p>
 <% end %>
 
-<%= dest_array %>
-<%= cur_array %>
-
 <h2>Quality of life</h2>
 <%= line_chart [
-    {name: @current_city.name, data: cur_array.values_at(0, 2, 6, 10, 12, 16)},
-    {name: @destination_city.name, data: dest_array.values_at(0, 2, 6, 10, 12, 16)}
+    {name: @current_city.name, data: @current_city_graph_lifequality},
+    {name: @destination_city.name, data: @destination_city_graph_lifequality}
   ]
 %>
 
 <h2>Cost and PP</h2>
 <%= line_chart [
-    {name: @current_city.name, data: cur_array.values_at(2, 3, 4, 8, 11, 14)},
-    {name: @destination_city.name, data: dest_array.values_at(2, 3, 4, 8, 11, 14)}
+    {name: @current_city.name, data: @current_city_graph_quantitative},
+    {name: @destination_city.name, data: @destination_city_quantitative}
   ]
 %>
