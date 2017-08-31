@@ -17,7 +17,7 @@ class PagesController < ApplicationController
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
-      redirect_to root_path
+      return redirect_to root_path
     end
 
     @current_city_indices = get_indices_for_city(@current_city)

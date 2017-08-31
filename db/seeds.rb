@@ -41,4 +41,3 @@ attr = {
 Profile.create!(attr[:profile])
 Factor.create!(attr[:factor])
 ProfilesFactor.create!(attr[:profiles_factor])
-
