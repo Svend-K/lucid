@@ -1,23 +1,29 @@
 .banner{
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .banner-content {
   text-align: center;
   color:white;
   top: 100px;
-  form {
-  color: black;
-  }
 }
+
+.search-form {
+  text-align:center;
+}
+
 
 .particle-network-animation {
   position: fixed;
   z-index: +99;
-  top: 70px;
+  top: 0px;
   left: 0;
   right: 0;
   height: 100vh;
+
   background: #C04848;
   background: -webkit-linear-gradient(to right, #480048, #C04848);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to left, #480048, #C04848); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
