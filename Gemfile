@@ -23,6 +23,7 @@ gem 'sass-rails'
 gem 'simple_form'
 gem 'uglifier'
 gem 'bourbon'
+gem 'twitter-typeahead-rails'
 
 group :development, :test do
   gem 'pry-byebug'
