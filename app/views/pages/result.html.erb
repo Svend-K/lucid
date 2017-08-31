@@ -16,7 +16,7 @@
           <%= line_chart [
               {name: @current_city.name, data: @current_city_graph_quantitative},
               {name: @destination_city.name, data: @destination_city_graph_quantitative}
-            ]
+            ],  colors: ["yellow", "blue"]
           %>
         </div>
     </div>
