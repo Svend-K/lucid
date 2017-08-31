@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830192634) do
+ActiveRecord::Schema.define(version: 20170831170101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,15 +101,6 @@ ActiveRecord::Schema.define(version: 20170830192634) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_factors", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "factor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["factor_id"], name: "index_users_factors_on_factor_id"
-    t.index ["user_id"], name: "index_users_factors_on_user_id"
-  end
-
   add_foreign_key "cities_factors", "cities"
   add_foreign_key "cities_factors", "factors"
   add_foreign_key "cities_indices", "cities"
@@ -118,6 +109,4 @@ ActiveRecord::Schema.define(version: 20170830192634) do
   add_foreign_key "cities_items", "items"
   add_foreign_key "profiles_factors", "factors"
   add_foreign_key "profiles_factors", "profiles"
-  add_foreign_key "users_factors", "factors"
-  add_foreign_key "users_factors", "users"
 end
