@@ -6,42 +6,39 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-# 50.times do
-#   City.create({
-#     name: Faker::Address.city,
-#   })
-
-#   Index.create({
-#     name: Faker::Company.name,
-#     score: rand(1..10)
-#   })
-# end
-
-# 50.times do
-#   CitiesIndex.create({
-#     index_id: (1..50).to_a.sample,
-#     city_id: (1..50).to_a.sample
-#   })
-# end
-
 attr = {
-       profile: [{name: 'worker'},
-                 {name: 'student'},
+       profile: [{name: 'student'},
+                 {name: 'worker'},
                  {name: 'family'}],
-       factor: [{name: 'burocracy'},
-                {name: 'friendly to foreigners'},
-                {name: 'fun'},
-                {name: 'nightlife'},
-                {name: 'english speaking'},
-                {name: 'walkability'},
-                {name: 'free wi-fi accessibility'},
-                {name: 'public transport'},
-                {name: 'high speed internet availability'},
-                {name: 'access to rent'},
-                {name: 'quality of education'}]
+       factor: [{name: 'burocracy'},#1
+                {name: 'friendly to foreigners'},#2
+                {name: 'fun'},#3
+                {name: 'nightlife'},#4
+                {name: 'english speaking'},#5
+                {name: 'walkability'},#6
+                {name: 'free wi-fi accessibility'},#7
+                {name: 'public transport'},#8
+                {name: 'high speed internet availability'},#9
+                {name: 'access to rent'},#10
+                {name: 'quality of education'}],#11
+        profiles_factor: [{profile_id: 1, factor_id: 4},
+                          {profile_id: 1, factor_id: 11},
+                          {profile_id: 1, factor_id: 8},
+                          {profile_id: 1, factor_id: 2},
+                          {profile_id: 1, factor_id: 5},
+                          {profile_id: 2, factor_id: 3},
+                          {profile_id: 2, factor_id: 9},
+                          {profile_id: 2, factor_id: 10},
+                          {profile_id: 2, factor_id: 2},
+                          {profile_id: 2, factor_id: 5},
+                          {profile_id: 3, factor_id: 11},
+                          {profile_id: 3, factor_id: 5},
+                          {profile_id: 3, factor_id: 2},
+                          {profile_id: 3, factor_id: 1},
+                          {profile_id: 3, factor_id: 3}]
        }
 
 Profile.create!(attr[:profile])
 Factor.create!(attr[:factor])
+ProfilesFactor.create!(attr[:profiles_factor])
 

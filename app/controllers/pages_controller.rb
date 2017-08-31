@@ -15,13 +15,8 @@ class PagesController < ApplicationController
     @current_city = get_city(params['current_city'])
     @destination_city = get_city(params['destination_city'])
 
-    # there's no city like that in numbeo db, note the user
-    if @current_city.nil? || @destination_city.nil?
-      redirect_to root_path
-    end
-
-    # cannot add same cities
-    if @current_city == @destination_city
+    # there's no city like that in numbeo db OR cannot add same cities THEN note the user
+    if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
       redirect_to root_path
     end
 

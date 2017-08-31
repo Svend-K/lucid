@@ -2,21 +2,22 @@
 
 <table>
   <tr>
-    <h2>Destination city: <%= @destination_city.name %></h2>
     <td>
+      <h2>Current city: <%= @current_city.name %></h2>
       <% @current_city_indices.each do |index| %>
         <p><%= index.index.name %></p>
         <p><%= index.score.round(2) %></p>
       <% end %>
     </td>
     <td>
+       <h2>Destination city: <%= @destination_city.name %></h2>
        <% @destination_city_indices.each do |index| %>
         <p><%= index.index.name %></p>
         <p><%= index.score.round(2) %></p>
       <% end %>
     </td>
   </tr>
-  <h2>Current city: <%= @current_city.name %></h2>
+
   <tr>
     <td>
      <% @current_city_prices.each do |p| %>
