@@ -10,4 +10,5 @@ class City < ApplicationRecord
   has_many :factors, through: :cities_factor
 
   validates :name, uniqueness: true
+
 end

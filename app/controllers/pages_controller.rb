@@ -33,9 +33,20 @@ class PagesController < ApplicationController
     @destination_city_graph_quantitative = get_indices_for_chart(destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
+
+    @qual_data = [get_qual_data(@current_city), get_qual_data(@destination_city)]
   end
 
   private
+
+  def get_qual_data(city)
+    current_city_hash = {}
+    city.cities_factor.each do |cf|
+      current_city_hash[cf.factor.name] = cf.score
+    end
+
+    current_city_qual_data = { name: @current_city.name, data: current_city_hash }
+  end
 
   def get_indices(city)
     indices_url = "/api/indices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}"
