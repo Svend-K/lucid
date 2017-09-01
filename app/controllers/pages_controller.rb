@@ -45,7 +45,7 @@ class PagesController < ApplicationController
       current_city_hash[cf.factor.name] = cf.score
     end
 
-    current_city_qual_data = { name: @current_city.name, data: current_city_hash }
+    current_city_qual_data = { name: city.name, data: current_city_hash }
   end
 
   def get_indices(city)
