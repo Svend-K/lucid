@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding">
-        <h3 class="content color font">Our reccomendation is <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> Your monthly spending in <%= @destination_city.name.capitalize %> would be <%= @spending_in_dest_city.round(0) %> EUR.</h3>
+        <h3 class="content color font padding">Our reccomendation is <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> Your monthly spending in <%= @destination_city.name.capitalize %> would be <%= @spending_in_dest_city.round(0) %> EUR.</h3>
         <div class="content-box margin-top">
-          <div class="content col-xs-12 col-md-6 padding margin-top color">
+          <div class="content col-xs-12 col-md-5 padding margin-top margin-right color">
             <h3 class="font">Quality of Life</h3>
             <%= line_chart [
                 {name: @current_city.name, data: @current_city_graph_lifequality},
@@ -12,7 +12,7 @@
               ], colors: ['#76AD99','#F47C2F']
             %>
           </div>
-          <div class="content col-xs-12 col-md-6 padding margin-top color">
+          <div class="content col-xs-12 col-md-5 padding margin-top color">
             <h3 class="font">Cost and PP</h3>
             <%= line_chart [
                 {name: @current_city.name, data: @current_city_graph_quantitative},
