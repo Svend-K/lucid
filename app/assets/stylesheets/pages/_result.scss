@@ -4,5 +4,15 @@
   justify-content: space-between;
 }
 .content {
-  align-self: center
+  align-self: center;
+  box-shadow: 3px 3px 4px 4px rgba(0,0,0,0.2);
+  text-align: center;
+  padding: 2px;
+}
+
+.container-fluid {
+background: #74ebd5;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #ACB6E5, #67cfdc);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #ACB6E5, #67cfdc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }

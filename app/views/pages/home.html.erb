@@ -16,12 +16,20 @@
       </div>
       <div class="form-group">
         <!-- <input name="user_profile" type="text" id="user_profile" placeholder="Your monthly spending" class="form-control"> -->
-        <select class="form-control" name="user_profile">
+ <!--        <select class="form-control" name="user_profile">
           <option value="freelancer">Freelancer</option>
           <option value="student">Student</option>
           <option value="family">Family</option>
+        </select> -->
+        <select class="form-control" name="user_profile">
+          <% Profile.all.each do |profile| %>
+            <option value="<%=profile.name%>">
+              <%=profile.name.capitalize%>
+            </option>
+          <% end %>
         </select>
       </div>
+
 
       <br><br>
       <input type="submit" value="Compare" class="btn btn-primary">

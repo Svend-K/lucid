@@ -12,13 +12,14 @@
           %>
         </div>
         <div class="content">
-          <h2>Cost and PP</h2>
+          <h2>Cost of Living</h2>
           <%= line_chart [
               {name: @current_city.name, data: @current_city_graph_quantitative},
               {name: @destination_city.name, data: @destination_city_graph_quantitative}
             ]
           %>
         </div>
+      </div>
     </div>
   </div>
 </div>
@@ -34,3 +35,16 @@
     </div>
   </div>
 <% end %>
+
+<%= @destination_city.name %>
+
+<% @destination_city.cities_factor.each do |f| %>
+  <p><%= f.factor.name %></p>
+  <p><%= f.score %></p>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= f.score*100 %>%;">
+      <span class="sr-only">60% Complete</span>
+    </div>
+  </div>
+<% end %>
+
