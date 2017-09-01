@@ -1,60 +1,34 @@
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <h2>Our reccomendation is <%=@recommended_city.capitalize%> based on your preferences.<br> Your monthly spending in <%= @destination_city.name.capitalize %> would be <%= @spending_in_dest_city.round(0) %> EUR.</h2>
-      <div class="content-box">
-        <div class="content">
-          <h2>Quality of life</h2>
-          <%= line_chart [
-              {name: @current_city.name, data: @current_city_graph_lifequality},
-              {name: @destination_city.name, data: @destination_city_graph_lifequality}
-            ]
-          %>
+<div class="wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding">
+        <h3 class="content color font">Our reccomendation is <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> Your monthly spending in <%= @destination_city.name.capitalize %> would be <%= @spending_in_dest_city.round(0) %> EUR.</h3>
+        <div class="content-box margin-top">
+          <div class="content col-xs-12 col-md-6 padding margin-top color">
+            <h3 class="font">Quality of Life</h3>
+            <%= line_chart [
+                {name: @current_city.name, data: @current_city_graph_lifequality},
+                {name: @destination_city.name, data: @destination_city_graph_lifequality},
+              ], colors: ['#76AD99','#F47C2F']
+            %>
+          </div>
+          <div class="content col-xs-12 col-md-6 padding margin-top color">
+            <h3 class="font">Cost and PP</h3>
+            <%= line_chart [
+                {name: @current_city.name, data: @current_city_graph_quantitative},
+                {name: @destination_city.name, data: @destination_city_graph_quantitative}
+              ],  colors: ['#76AD99','#F47C2F']
+            %>
+          </div>
         </div>
-        <div class="content">
-          <h2>Cost and PP</h2>
-          <%= line_chart [
-              {name: @current_city.name, data: @current_city_graph_quantitative},
-              {name: @destination_city.name, data: @destination_city_graph_quantitative}
-            ],  colors: ["yellow", "blue"]
-          %>
+       <div class="content-box">
+        <div class="content col-sm-12 padding margin-top color">
+        <h3 class="font">Qualitative Factors</h3>
+          <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
         </div>
       </div>
-
     </div>
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-    <div class="content-box">
-      <div class="content">
-        <%= column_chart @qual_data, colors: ["green", "#FF0000"], library: {backgroundColor: "#FFF", height: 265} %>
-      </div>
     </div>
-  </div>
   </div>
 </div>
 
-<!-- <div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
-      <div class="content-box">
-        <div class="content">
-          <h2>Quality of life</h2>
-          <%= line_chart [
-              {name: @current_city.name, data: @current_city_graph_lifequality},
-              {name: @destination_city.name, data: @destination_city_graph_lifequality}
-            ]
-          %>
-        </div>
-        <div class="content">
-          <h2>Cost of Living</h2>
-          <%= line_chart [
-              {name: @current_city.name, data: @current_city_graph_quantitative},
-              {name: @destination_city.name, data: @destination_city_graph_quantitative}
-            ]
-          %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
