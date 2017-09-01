@@ -17,7 +17,7 @@ class PagesController < ApplicationController
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
-      return redirect_to root_path
+      redirect_to root_path and return
     end
 
     get_items_for_city(@current_city)
@@ -33,9 +33,20 @@ class PagesController < ApplicationController
     @destination_city_graph_quantitative = get_indices_for_chart(destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
+
+    @qual_data = [get_qual_data(@current_city), get_qual_data(@destination_city)]
   end
 
   private
+
+  def get_qual_data(city)
+    current_city_hash = {}
+    city.cities_factor.each do |cf|
+      current_city_hash[cf.factor.name] = cf.score
+    end
+
+    current_city_qual_data = { name: city.name, data: current_city_hash }
+  end
 
   def get_indices(city)
     indices_url = "/api/indices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}"
