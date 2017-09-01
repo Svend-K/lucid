@@ -1,38 +1,38 @@
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
-      <div class="content-box">
-        <div class="content">
-          <h2>Quality of life</h2>
-          <%= line_chart [
-              {name: @current_city.name, data: @current_city_graph_lifequality},
-              {name: @destination_city.name, data: @destination_city_graph_lifequality}
-            ]
-          %>
+<div class="wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding">
+        <h2 class="content color font">Based on your preferences <br> We recommend <br> <strong><%=@recommended_city.capitalize%></strong></h2>
+        <div class="content-box margin-top">
+          <div class="content col-xs-12 col-md-6 padding margin-top color">
+            <h2 class="font">Quality of Life</h2>
+            <%= line_chart [
+                {name: @current_city.name, data: @current_city_graph_lifequality},
+                {name: @destination_city.name, data: @destination_city_graph_lifequality},
+              ], colors: ['#76AD99','#F47C2F']
+            %>
+          </div>
+          <div class="content col-xs-12 col-md-6 padding margin-top color">
+            <h2 class="font">Cost and PP</h2>
+            <%= line_chart [
+                {name: @current_city.name, data: @current_city_graph_quantitative},
+                {name: @destination_city.name, data: @destination_city_graph_quantitative}
+              ],  colors: ['#76AD99','#F47C2F']
+            %>
+          </div>
         </div>
-        <div class="content">
-          <h2>Cost and PP</h2>
-          <%= line_chart [
-              {name: @current_city.name, data: @current_city_graph_quantitative},
-              {name: @destination_city.name, data: @destination_city_graph_quantitative}
-            ],  colors: ["yellow", "blue"]
-          %>
+       <div class="content-box">
+        <div class="content col-sm-12 padding margin-top color">
+        <h2>Qualitative Factors</h2>
+          <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
         </div>
       </div>
-
     </div>
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-    <div class="content-box">
-      <div class="content">
-        <%= column_chart @qual_data, colors: ["green", "#FF0000"], library: {backgroundColor: "#FFF", height: 265} %>
-      </div>
     </div>
-  </div>
   </div>
 </div>
 
+<strong></strong>
 <!-- <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
