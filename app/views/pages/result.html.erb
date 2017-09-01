@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <h2>Lucid's reccomendation engine reccomends <%=@recommended_city.capitalize%> based on your preferences</h2>
+      <h2>Our reccomendation is <%=@recommended_city.capitalize%> based on your preferences.<br> Your monthly spending in <%= @destination_city.name.capitalize %> would be <%= @spending_in_dest_city.round(0) %> EUR.</h2>
       <div class="content-box">
         <div class="content">
           <h2>Quality of life</h2>

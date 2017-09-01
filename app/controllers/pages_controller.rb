@@ -23,21 +23,30 @@ class PagesController < ApplicationController
     get_items_for_city(@current_city)
     get_items_for_city(@destination_city)
 
-    current_city_indices = get_indices_for_city(@current_city)
-    destination_city_indices = get_indices_for_city(@destination_city)
+    @current_city_indices = get_indices_for_city(@current_city)
+    @destination_city_indices = get_indices_for_city(@destination_city)
 
-    @current_city_graph_lifequality = get_indices_for_chart(current_city_indices).values_at(0, 1, 6, 10, 12, 16)
-    @destination_city_graph_lifequality = get_indices_for_chart(destination_city_indices).values_at(0, 1, 6, 10, 12, 16)
+    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices).values_at(0, 1, 6, 10, 12, 16)
+    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices).values_at(0, 1, 6, 10, 12, 16)
 
-    @current_city_graph_quantitative = get_indices_for_chart(current_city_indices).values_at(2, 3, 4, 8, 11, 14)
-    @destination_city_graph_quantitative = get_indices_for_chart(destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
+    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices).values_at(2, 3, 4, 8, 11, 14)
+    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
 
     @qual_data = [get_qual_data(@current_city), get_qual_data(@destination_city)]
+
+    @spending_in_dest_city = get_spending_in_dest_city
   end
 
   private
+
+  def get_spending_in_dest_city
+    current_city_cpi_and_rent_score = @current_city_indices[2].score
+    destination_city_cpi_and_rent_score = @destination_city_indices[2].score
+    current_spending = params['monthly_spending'].to_i
+    return current_spending / current_city_cpi_and_rent_score * destination_city_cpi_and_rent_score
+  end
 
   def get_qual_data(city)
     current_city_hash = {}
