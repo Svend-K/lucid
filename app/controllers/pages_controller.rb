@@ -6,6 +6,18 @@ class PagesController < ApplicationController
   NUMBEO_API_KEY = "tzkq1cec4lcm6h"
   BASE_URL = "https://www.numbeo.com"
 
+  API_INDICES_MAPPING = {
+    "crime_index" => "Crime Rate"
+    "traffic_time_index" => "Traffic"
+    "safety_index" => "Safety"
+    "quality_of_life_index" => "Lifequality"
+    "health_care_index" => "Healthcare"
+    "pollution_index" => "Pollution"
+    "cpi_and_rent_index" => "Rent price"
+    "purchasing_power_incl_rent_index" => "Money worth"
+    "restaurant_price_index" => "Restaurant cost"
+  }
+
   def home
     @current_city = City.new
     @destination_city = City.new
