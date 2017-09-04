@@ -44,6 +44,7 @@ class PagesController < ApplicationController
   def result
     @current_city = get_city(params[:current_city])
     @destination_city = get_city(params[:destination_city])
+    @user_profile = params[:user_profile]
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
@@ -65,6 +66,7 @@ class PagesController < ApplicationController
     @recommended_city = get_recommended_city(@current_city, @destination_city)
 
     @qual_data = [get_qual_data(@current_city), get_qual_data(@destination_city)]
+    @qual_data_user_profile = [get_qual_data_user_profile(@current_city, @user_profile), get_qual_data_user_profile(@destination_city, @user_profile)]
 
     @spending_in_dest_city = get_spending_in_dest_city
   end
@@ -87,6 +89,20 @@ class PagesController < ApplicationController
 
     current_city_qual_data = { name: city.name, data: current_city_hash }
   end
+
+  def get_qual_data_user_profile(city, user_profile)
+    current_city_hash = {}
+    user_profile_object = Profile.find_by(name:user_profile)
+    user_factor_objects = []
+    user_profile_object.profiles_factors.each { |profilefactor| user_factor_objects << profilefactor.factor }
+    user_factor_objects.each do |user_factor_object|
+      city.cities_factor.where('factor_id = ?', user_factor_object).each do |cf|
+        current_city_hash[cf.factor.name] = cf.score
+      end
+    end
+    current_city_qual_data = { name: city.name, data: current_city_hash }
+  end
+
 
   def get_indices(city)
     indices_url = "/api/indices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}"
