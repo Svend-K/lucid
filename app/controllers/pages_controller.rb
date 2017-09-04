@@ -7,16 +7,33 @@ class PagesController < ApplicationController
   BASE_URL = "https://www.numbeo.com"
 
   API_INDICES_MAPPING = {
-    "crime_index" => "Crime Rate"
-    "traffic_time_index" => "Traffic"
-    "safety_index" => "Safety"
-    "quality_of_life_index" => "Lifequality"
-    "health_care_index" => "Healthcare"
-    "pollution_index" => "Pollution"
-    "cpi_and_rent_index" => "Rent price"
-    "purchasing_power_incl_rent_index" => "Money worth"
+    "crime_index" => "Crime Rate",
+    "traffic_time_index" => "Traffic",
+    "safety_index" => "Safety",
+    "quality_of_life_index" => "Lifequality",
+    "health_care_index" => "Healthcare",
+    "pollution_index" => "Pollution",
+    "cpi_and_rent_index" => "Rent price",
+    "purchasing_power_incl_rent_index" => "Money worth",
     "restaurant_price_index" => "Restaurant cost"
   }
+  LIFEQUALITY_INDEX_NAMES = [
+    "crime_index",
+    "traffic_time_index",
+    "safety_index",
+    "quality_of_life_index",
+    "health_care_index",
+    "pollution_index"
+  ]
+
+  QUANTITATIVE_INDEX_NAMES = [
+    "cpi_and_rent_index",
+    "purchasing_power_incl_rent_index",
+    "restaurant_price_index",
+    "cpi_index",
+    "rent_index",
+    "groceries_index"
+  ]
 
   def home
     @current_city = City.new
@@ -38,11 +55,11 @@ class PagesController < ApplicationController
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
 
-    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices).values_at(0, 1, 6, 10, 12, 16)
-    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices).values_at(0, 1, 6, 10, 12, 16)
+    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices, LIFEQUALITY_INDEX_NAMES)
+    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices, LIFEQUALITY_INDEX_NAMES)
 
-    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices).values_at(2, 3, 4, 8, 11, 14)
-    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
+    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices, QUANTITATIVE_INDEX_NAMES)
+    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices, QUANTITATIVE_INDEX_NAMES)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
 
@@ -54,8 +71,9 @@ class PagesController < ApplicationController
   private
 
   def get_spending_in_dest_city
-    current_city_cpi_and_rent_score = @current_city_indices[2].score
-    destination_city_cpi_and_rent_score = @destination_city_indices[2].score
+    current_city_cpi_and_rent_score = get_indices_hash_for_chart(@current_city_indices)["cpi_and_rent_index"]
+    destination_city_cpi_and_rent_score = get_indices_hash_for_chart(@destination_city_indices)["cpi_and_rent_index"]
+
     current_spending = params['monthly_spending'].to_i
     return current_spending / current_city_cpi_and_rent_score * destination_city_cpi_and_rent_score
   end
@@ -93,7 +111,7 @@ class PagesController < ApplicationController
       serialized = open(full_url).read
       json = JSON.parse(serialized)
       json_cities = json['cities']
-      if json_cities.any? { |c| name.capitalize == c['city'] }
+      if json_cities.any? { |c| c['city'].downcase.include? name.downcase }
         city = City.create!(name: name.downcase)
       end
     end
@@ -155,7 +173,19 @@ class PagesController < ApplicationController
     end
   end
 
-  def get_indices_for_chart(city_indices)
-    city_indices.map { |index| [index.index.name, index.score] }
+  def get_indices_for_chart(city_indices, index_names)
+    city_hash = get_indices_hash_for_chart(city_indices)
+
+    return index_names.map do |index_name|
+      [index_name, city_hash[index_name]]
+    end
+  end
+
+  def get_indices_hash_for_chart(city_indices)
+    city_indices.reduce({}) do |indices, city_index|
+      indices[city_index.index.name] = city_index.score
+
+      indices
+    end
   end
 end
