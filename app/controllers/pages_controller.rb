@@ -6,6 +6,24 @@ class PagesController < ApplicationController
   NUMBEO_API_KEY = "tzkq1cec4lcm6h"
   BASE_URL = "https://www.numbeo.com"
 
+  LIFEQUALITY_INDEX_NAMES = [
+    "crime_index",
+    "traffic_time_index",
+    "safety_index",
+    "quality_of_life_index",
+    "health_care_index",
+    "pollution_index"
+  ]
+
+  QUANTITATIVE_INDEX_NAMES = [
+    "cpi_and_rent_index",
+    "purchasing_power_incl_rent_index",
+    "restaurant_price_index",
+    "cpi_index",
+    "rent_index",
+    "groceries_index"
+  ]
+
   def home
     @current_city = City.new
     @destination_city = City.new
@@ -26,29 +44,11 @@ class PagesController < ApplicationController
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
 
-    lifequality_index_names = [
-      "crime_index",
-      "traffic_time_index",
-      "safety_index",
-      "quality_of_life_index",
-      "health_care_index",
-      "pollution_index"
-    ]
+    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices, LIFEQUALITY_INDEX_NAMES)
+    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices, LIFEQUALITY_INDEX_NAMES)
 
-    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices, lifequality_index_names)
-    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices, lifequality_index_names)
-
-    quantitative_index_names = [
-      "cpi_and_rent_index",
-      "purchasing_power_incl_rent_index",
-      "restaurant_price_index",
-      "cpi_index",
-      "rent_index",
-      "groceries_index"
-    ]
-
-    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices, quantitative_index_names)
-    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices, quantitative_index_names)
+    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices, QUANTITATIVE_INDEX_NAMES)
+    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices, QUANTITATIVE_INDEX_NAMES)
 
     @recommended_city = get_recommended_city(@current_city, @destination_city)
 
