@@ -81,7 +81,7 @@ class PagesController < ApplicationController
       serialized = open(full_url).read
       json = JSON.parse(serialized)
       json_cities = json['cities']
-      if json_cities.any? { |c| name.capitalize == c['city'] }
+      if json_cities.any? { |c| c['city'].downcase.include? name.downcase }
         city = City.create!(name: name.downcase)
       end
     end
