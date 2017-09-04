@@ -13,9 +13,11 @@ class PagesController < ApplicationController
     "quality_of_life_index" => "Lifequality",
     "health_care_index" => "Healthcare",
     "pollution_index" => "Pollution",
-    "cpi_and_rent_index" => "Rent price",
-    "purchasing_power_incl_rent_index" => "Money worth",
-    "restaurant_price_index" => "Restaurant cost"
+    "rent_index" => "Rent Price",
+    "purchasing_power_incl_rent_index" => "Money Worth",
+    "restaurant_price_index" => "Restaurant Cost",
+    "groceries_index" => "Groceries",
+    "cpi_index" => "Consumer-Price Index",
   }
   LIFEQUALITY_INDEX_NAMES = [
     "crime_index",
@@ -27,7 +29,6 @@ class PagesController < ApplicationController
   ]
 
   QUANTITATIVE_INDEX_NAMES = [
-    "cpi_and_rent_index",
     "purchasing_power_incl_rent_index",
     "restaurant_price_index",
     "cpi_index",
@@ -173,11 +174,12 @@ class PagesController < ApplicationController
     end
   end
 
-  def get_indices_for_chart(city_indices, index_names)
+  def get_indices_for_chart(city_indices, api_index_names)
     city_hash = get_indices_hash_for_chart(city_indices)
 
-    return index_names.map do |index_name|
-      [index_name, city_hash[index_name]]
+    return api_index_names.map do |api_index_name|
+      index_name = API_INDICES_MAPPING[api_index_name]
+      [index_name, city_hash[api_index_name]]
     end
   end
 
