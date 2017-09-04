@@ -24,6 +24,47 @@ class PagesController < ApplicationController
     "groceries_index"
   ]
 
+  ITEMS_TO_EXCLUDE = [
+    "Toyota Corolla 1.6l 97kW Comfort (Or Equivalent New Car), Transportation",
+    "Volkswagen Golf 1.4 90 KW Trendline (Or Equivalent New Car), Transportation",
+    "International Primary School, Yearly for 1 Child, Childcare",
+    "Average Monthly Net Salary (After Tax), Salaries And Financing",
+    "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price",
+    "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price",
+    "Apartment (1 bedroom) Outside of Centre, Rent Per Month",
+    "Apartment (1 bedroom) in City Centre, Rent Per Month",
+    "Apartment (3 bedrooms) Outside of Centre, Rent Per Month",
+    "Apartment (3 bedrooms) in City Centre, Rent Per Month",
+    "Preschool (or Kindergarten), Private, Monthly for 1 Child, Childcare",
+  ]
+
+  ITEMS_FOR_WORKER = [
+  "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL), Utilities (Monthly)",
+  "Cinema, International Release, 1 Seat, Sports And Leisure",
+  "Cappuccino (regular), Restaurants",
+  "Basic (Electricity, Heating, Water, Garbage) for 85m2 Apartment, Utilities (Monthly)",
+  "Apartment (1 bedroom) Outside of Centre, Rent Per Month",
+  "Apartment (1 bedroom) in City Centre, Rent Per Month"
+  ]
+
+  ITEMS_FOR_FAMILY = [
+  "Meal for 2 People, Mid-range Restaurant, Three-course, Restaurants",
+  "Monthly Pass (Regular Price), Transportation",
+  "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price",
+  "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price",
+  "Apartment (3 bedrooms) Outside of Centre, Rent Per Month",
+  "Apartment (3 bedrooms) in City Centre, Rent Per Month"
+   ]
+
+  ITEMS_FOR_STUDENT = [
+  "Cappuccino (regular), Restaurants",
+  "Domestic Beer (0.5 liter bottle), Markets",
+  "McMeal at McDonalds (or Equivalent Combo Meal), Restaurants",
+  "Apples (1kg), Markets",
+  "Monthly Pass (Regular Price), Transportation",
+  "Rice (white), (1kg), Markets"
+  ]
+
   def home
     @current_city = City.new
     @destination_city = City.new
@@ -39,15 +80,17 @@ class PagesController < ApplicationController
       redirect_to root_path and return
     end
 
-    get_items_for_city(@current_city)
-    get_items_for_city(@destination_city)
+    @current_city_items = get_items_for_city(@current_city)
+    @destionation_city_items = get_items_for_city(@destination_city)
+    @current_city_items_for_display = get_items_for_display(@current_city_items)
+    @destination_city_items_for_display = get_items_for_display(@destionation_city_items)
+    @cites_items_for_display = @current_city_items_for_display.zip @destination_city_items_for_display
 
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
 
     @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices, LIFEQUALITY_INDEX_NAMES)
     @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices, LIFEQUALITY_INDEX_NAMES)
-
     @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices, QUANTITATIVE_INDEX_NAMES)
     @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices, QUANTITATIVE_INDEX_NAMES)
 
@@ -175,6 +218,25 @@ class PagesController < ApplicationController
       current_city.name
     else
       destination_city.name
+    end
+  end
+
+  def get_items_for_display(items)
+    items_array = []
+    items.each do |item|
+      items_array << [item.item.name, item.price.round(1)]
+    end
+    items_array.select! { |i| get_items_array_for_user_profiles.include? i[0] }
+  end
+
+  def get_items_array_for_user_profiles
+    user_profile = params['user_profile']
+    if user_profile == "worker"
+      return ITEMS_FOR_WORKER
+    elsif user_profile == "family"
+      return ITEMS_FOR_FAMILY
+    elsif user_profile == "student"
+      return ITEMS_FOR_STUDENT
     end
   end
 

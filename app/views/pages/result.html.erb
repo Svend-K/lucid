@@ -1,40 +1,61 @@
 <div class="wrapper">
-      <div class="container">
-        <h3 class="content color font padding">We reccomend <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> <br>Your monthly spending in <%= @destination_city.name.capitalize %> would be €<%= @spending_in_dest_city.round(0) %> to maintain your standard of living in <%=@current_city.name.capitalize%>.</h3>
-        <div class="row margin-top">
-          <div class="col-xs-12 col-md-6">
-          <div class="color padding content">
-            <h3 class="font">Quality of Life</h3>
-            <%= line_chart [
-                {name: @current_city.name, data: @current_city_graph_lifequality},
-                {name: @destination_city.name, data: @destination_city_graph_lifequality},
-              ], colors: ['#76AD99','#F47C2F']
+  <div class="container">
+    <h3 class="content color font padding">We reccomend <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> <br>Your monthly spending in <%= @destination_city.name.capitalize %> would be €<%= @spending_in_dest_city.round(0) %> to maintain your standard of living in <%=@current_city.name.capitalize%>.</h3>
+    <div class="row margin-top">
+      <div class="col-xs-12 col-md-6">
+        <div class="color padding content">
+          <h3 class="font">Quality of Life</h3>
+          <%= line_chart [
+            {name: @current_city.name, data: @current_city_graph_lifequality},
+            {name: @destination_city.name, data: @destination_city_graph_lifequality},
+            ], colors: ['#76AD99','#F47C2F'],
+            curve: false
             %>
           </div>
-          </div>
-          <div class="col-xs-12 col-md-6">
+        </div>
+        <div class="col-xs-12 col-md-6">
           <div class="color padding content">
             <h3 class="font">Cost and PP</h3>
             <%= line_chart [
-                {name: @current_city.name, data: @current_city_graph_quantitative},
-                {name: @destination_city.name, data: @destination_city_graph_quantitative}
-              ],  colors: ['#76AD99','#F47C2F']
-            %>
-          </div>
+              {name: @current_city.name, data: @current_city_graph_quantitative},
+              {name: @destination_city.name, data: @destination_city_graph_quantitative}
+              ],  colors: ['#76AD99','#F47C2F'],
+              curve: false
+              %>
+            </div>
           </div>
         </div>
-       <div class="row margin-top">
-        <div class="col-sm-12">
-        <div class="padding color margin-bottom content">
-        <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
-         <% if @user_profile.present? %>
-          <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-          <% else %>
-           <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-          <% end %>
+        <div class="row margin-top">
+          <div class="col-sm-12">
+            <div class="padding color margin-bottom content">
+              <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
+              <% if @user_profile.present? %>
+              <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+              <% else %>
+              <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+              <% end %>
+            </div>
+          </div>
         </div>
+        <div class="row margin-top">
+          <div class="container">
+            <div class="row">
+              <% @cites_items_for_display.each do |i| %>
+              <div class="col-xs-12 col-sm-4">
+              <div class="card" style="background-image: url(<%= image_path 'coffee-cup.svg'%>)">
+                  <div class="card-category">
+                    <p><%= i[0][0] %></p>
+                  </div>
+                  <div class="card-description">
+                    <p><%= @current_city.name.capitalize %>: </p><h2><%= i[0][1] %> EUR</h2>
+                    <p><%= @destination_city.name.capitalize %>:</p><h2><%= i[1][1] %> EUR</h2>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
-  </div>
-</div>
+    </div>
 

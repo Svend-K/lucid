@@ -44,3 +44,38 @@ background-attachment: fixed;
 .color {
   background-color: rgba(255, 255, 255, 0.7);
 }
+
+.card {
+  height: 250px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  background-size: cover !important;
+  background-position: center;
+  color: white;
+  position: relative;
+  background-color: black;
+  margin-bottom: 25px;
+}
+.card:hover {
+  opacity: 0.5;
+}
+.card-category {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+.card-description {
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+}
+.card-description h2 {
+  font-size: 24px;
+  margin-top: 0px;
+}
+.card-description p {
+  font-size: 14px;
+  opacity: 0.7;
+  font-weight: lighter;
+}
