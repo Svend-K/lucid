@@ -1,7 +1,100 @@
-<h1>Pages#home</h1>
+<div class="map-container">
+  <div class="map-filter"></div>
+  <div class="map-form">
+    <h1>Lucid</h1>
+    <h2>Find the best place to live intelligently</h2>
+    <!-- <p>Compare cities on quality of life, costs of living, salaries and more</p> -->
+    <form action="/result" method="GET" class="form-inline">
+      <div class="form-group">
+        <input name="current_city" type="text" id="current_city" placeholder="Where do you live?" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <input name="destination_city" type="text" id="destination_city" placeholder="Where are you headed?" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <input name="monthly_spending" type="text" id="current_city" placeholder="EUR monthly spending" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <!-- <input name="user_profile" type="text" id="user_profile" placeholder="Your monthly spending" class="form-control"> -->
+ <!--        <select class="form-control" name="user_profile">
+          <option value="freelancer">Freelancer</option>
+          <option value="student">Student</option>
+          <option value="family">Family</option>
+        </select> -->
+        <select class="form-control" name="user_profile">
+          <% Profile.all.each do |profile| %>
+            <option value="<%=profile.name%>">
+              <%=profile.name.capitalize%>
+            </option>
+          <% end %>
+        </select>
+      </div>
 
-<form action="/result" method="GET">
-  Current city: <input name="current_city" type="text" >
-  Destination city: <input name="destination_city" type="text">
-  <input type="submit">
-</form>
+
+      <br><br>
+      <input type="submit" value="Compare" class="btn btn-primary">
+    </form>
+  </div>
+
+  <div class="map-bg" style="background-image: url(http://res.cloudinary.com/slzr/image/upload/v1500321012/world-map-1500_vvekl5.png"></div>
+  <div class="point venezuela tippy" title="Venezuela"></div>
+  <div class="point brasil tippy" title="Brasil"></div>
+  <div class="point argentina tippy" title="Argentina"></div>
+  <div class="point colombia tippy" title="Colombia"></div>
+  <div class="point panama tippy" title="Panamá"></div>
+  <div class="point mexico tippy" title="Mexico"></div>
+  <div class="point usa tippy" title="Estados Unidos"></div>
+  <div class="point arabia tippy" title="Arabia Saudi"></div>
+  <div class="point turquia tippy" title="Turquía"></div>
+  <div class="point rusia tippy" title="Rusia"></div>
+  <div class="point china tippy" title="China"></div>
+  <div class="point japon tippy" title="Japon"></div>
+  <div class="point australia tippy" title="Australia"></div>
+</div>
+
+<%= content_for :after_js do %>
+<script>
+
+  var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+      var matches, substringRegex;
+
+      // an array that will be populated with substring matches
+      matches = [];
+
+      // regex used to determine if a string contains the substring `q`
+      substrRegex = new RegExp(q, 'i');
+
+      // iterate through the pool of strings and for any string that
+      // contains the substring `q`, add it to the `matches` array
+      $.each(strs, function(i, str) {
+        if (substrRegex.test(str)) {
+          matches.push(str);
+        }
+      });
+
+      cb(matches);
+    };
+  };
+
+  var cities = <%= City.all.map { |c| c.name }.to_json.html_safe %>;
+  // var cities = ["Paris", "Berlin"];
+
+
+  $('#current_city, #destination_city').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  {
+    name: 'cities',
+    source: substringMatcher(cities)
+  });
+</script>
+<% end %>
+
+
+
+
+
+

@@ -12,20 +12,50 @@ class PagesController < ApplicationController
   end
 
   def result
+    @current_city = get_city(params[:current_city])
+    @destination_city = get_city(params[:destination_city])
 
-    @current_city = get_city(params['current_city'])
-    @destination_city = get_city(params['destination_city'])
+    # there's no city like that in numbeo db OR cannot add same cities THEN note the user
+    if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
+      redirect_to root_path and return
+    end
 
-    # purchasing_power_incl_rent_index
-    local_purch_pow_index = Index.find_by(name: 'purchasing_power_incl_rent_index')
+    get_items_for_city(@current_city)
+    get_items_for_city(@destination_city)
 
-    @current_city_local_purch_pow = get_index_for_city(@current_city, local_purch_pow_index)
-    @destination_city_local_purch_pow = get_index_for_city(@destination_city, local_purch_pow_index)
+    @current_city_indices = get_indices_for_city(@current_city)
+    @destination_city_indices = get_indices_for_city(@destination_city)
 
-    # @current_city_prices = get_prices_for_city(@current_city)
+    @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices).values_at(0, 1, 6, 10, 12, 16)
+    @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices).values_at(0, 1, 6, 10, 12, 16)
+
+    @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices).values_at(2, 3, 4, 8, 11, 14)
+    @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices).values_at(2, 3, 4, 8, 11, 14)
+
+    @recommended_city = get_recommended_city(@current_city, @destination_city)
+
+    @qual_data = [get_qual_data(@current_city), get_qual_data(@destination_city)]
+
+    @spending_in_dest_city = get_spending_in_dest_city
   end
 
   private
+
+  def get_spending_in_dest_city
+    current_city_cpi_and_rent_score = @current_city_indices[2].score
+    destination_city_cpi_and_rent_score = @destination_city_indices[2].score
+    current_spending = params['monthly_spending'].to_i
+    return current_spending / current_city_cpi_and_rent_score * destination_city_cpi_and_rent_score
+  end
+
+  def get_qual_data(city)
+    current_city_hash = {}
+    city.cities_factor.each do |cf|
+      current_city_hash[cf.factor.name] = cf.score
+    end
+
+    current_city_qual_data = { name: city.name, data: current_city_hash }
+  end
 
   def get_indices(city)
     indices_url = "/api/indices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}"
@@ -33,7 +63,7 @@ class PagesController < ApplicationController
   end
 
   def get_prices(city)
-    prices_url = "/api/city_prices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}"
+    prices_url = "/api/city_prices?api_key=#{NUMBEO_API_KEY}&query=#{city.name}&currency=EUR"
     prices_json = get_json_from(prices_url)
   end
 
@@ -44,39 +74,76 @@ class PagesController < ApplicationController
   end
 
   def get_city(name)
-    # check if city already exists, save if not
-    downcase_name = name.downcase
-    if City.find_by(name: downcase_name).nil?
-      city = City.create!(name: downcase_name)
+    if City.find_by(name: name.downcase)
+      city =  City.find_by(name: name.downcase)
     else
-      city = City.find_by(name: downcase_name)
+      full_url = BASE_URL + "/api/cities?api_key=#{NUMBEO_API_KEY}"
+      serialized = open(full_url).read
+      json = JSON.parse(serialized)
+      json_cities = json['cities']
+      if json_cities.any? { |c| name.capitalize == c['city'] }
+        city = City.create!(name: name.downcase)
+      end
+    end
+    return city
+  end
+
+  def get_indices_for_city(city)
+    unless CitiesIndex.find_by(city_id: city.id).nil?
+      return @city_indices = CitiesIndex.where(city_id: city.id)
+    end
+
+    @city_indices = []
+    indices = get_indices(city)
+    indices.each do |i, v|
+
+      if Index.find_by(name: i).nil?
+        current_index = Index.create!(name: i)
+      else
+        current_index = Index.find_by(name: i)
+      end
+
+      current_cities_index = CitiesIndex.create!(city_id: city.id, index_id: current_index.id, score: v)
+
+      @city_indices << current_cities_index
+    end
+    return @city_indices
+  end
+
+  def get_items_for_city(city)
+    @city_items = []
+
+    unless CitiesItem.find_by(city_id: city.id).nil?
+      return @city_items = CitiesItem.where(city_id: city.id)
+    end
+
+    prices = get_prices(city)
+    prices['prices'].each do |p|
+
+      if Item.find_by(name: p['item_name']).nil?
+        current_item = Item.create!(name: p['item_name'])
+      else
+        current_item = Item.find_by(name: p['item_name'])
+      end
+
+      @city_items << CitiesItem.create!(city_id: city.id, item_id: current_item.id, price: p['average_price'])
+    end
+    return @city_items
+  end
+
+  def get_recommended_city(current_city, destination_city)
+    index = Index.find_by(name: "purchasing_power_incl_rent_index")
+    current_city_score = CitiesIndex.find_by(index_id: index.id, city_id:current_city.id).score
+    destination_city_score = CitiesIndex.find_by(index_id: index.id, city_id:destination_city.id).score
+
+    if current_city_score > destination_city_score
+      current_city.name
+    else
+      destination_city.name
     end
   end
 
-  def get_index_for_city(city, index)
-    city_local_purch_pow_index = CitiesIndex.find_by(city_id: city.id, index_id: index.id)
-    if city_local_purch_pow_index.nil?
-      city_indices = get_indices(city)
-      city_local_purch_pow = CitiesIndex.create!(city_id: city.id, index_id: index.id, score: city_indices['purchasing_power_incl_rent_index'])
-    else
-      city_local_purch_pow = city_local_purch_pow_index
-    end
+  def get_indices_for_chart(city_indices)
+    city_indices.map { |index| [index.index.name, index.score] }
   end
-
-  # def get_prices_for_city(city)
-  #   @cities_items = []
-
-  #   prices = get_prices(city)['prices']
-  #   prices.each do |p|
-
-  #     if Item.find_by(name: p['item_name']).nil?
-  #       current_item = Item.create!(name: p['item_name'])
-  #     else
-  #       current_item = Item.find_by(name: p['item_name'])
-  #     end
-
-  #     @cities_items << CitiesItem.create!(city_id: city.id, item_id: current_item.id, price: p['average_price'])
-  #   end
-  # end
-
 end
