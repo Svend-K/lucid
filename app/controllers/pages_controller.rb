@@ -45,6 +45,7 @@ class PagesController < ApplicationController
     @current_city = get_city(params[:current_city])
     @destination_city = get_city(params[:destination_city])
     @user_profile = params[:user_profile]
+    @spending_in_current_city = params['monthly_spending'].to_i
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
@@ -127,7 +128,7 @@ class PagesController < ApplicationController
     images_url = "https://api.teleport.org/api/urban_areas/slug:#{city.name}/images"
     serialized = open(images_url).read
     json = JSON.parse(serialized)
-    json["photos"][0]["image"]["web"]
+    json["photos"][0]["image"]["mobile"]
   end
 
   def get_city(name)

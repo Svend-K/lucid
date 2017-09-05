@@ -1,44 +1,109 @@
 <div class="wrapper">
-      <div class="container">
+  <div class="container">
 
-      <%= image_tag(@current_city_image) %>
-      <%= image_tag(@destination_city_image) %>
-        <h3 class="content color font padding">We reccomend <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> <br>Your monthly spending in <%= @destination_city.name.capitalize %> would be €<%= @spending_in_dest_city.round(0) %> to maintain your standard of living in <%=@current_city.name.capitalize%>.</h3>
+    <div class="image-container margin-top">
+      <div class="image-cropper inline img1" style="background-image: url(<%= image_path(@current_city_image) %>)">
 
-        <div class="row margin-top">
-          <div class="col-xs-12 col-md-6">
-          <div class="color padding content">
-            <h3 class="font">Quality of Life</h3>
-            <%= line_chart [
-                {name: @current_city.name, data: @current_city_graph_lifequality},
-                {name: @destination_city.name, data: @destination_city_graph_lifequality},
-              ], colors: ['#76AD99','#F47C2F']
-            %>
+      </div>
+      <div class="image-cropper inline img2" style="background-image: url(<%= image_path(@destination_city_image) %>)">
+
+      </div>
+    </div>
+
+
+    <div class="row margin-top">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <div class="cities-box">
+          <%if @recommended_city == @current_city.name%>
+          <div class="city-box">
+            <h1 class="green"><%=@current_city.name.capitalize%> </h1>
+            <h2>You need €<%=@spending_in_current_city.round(0)%></h2>
+            <p>to live</p>
           </div>
+          <div class="separator"></div>
+          <div class="city-box">
+            <h1 class="red"><%=@destination_city.name.capitalize%> </h1>
+            <h2>You need €<%=@spending_in_dest_city.round(0)%></h2>
+            <p>to live</p>
           </div>
-          <div class="col-xs-12 col-md-6">
-          <div class="color padding content">
-            <h3 class="font">Cost and PP</h3>
-            <%= line_chart [
-                {name: @current_city.name, data: @current_city_graph_quantitative},
-                {name: @destination_city.name, data: @destination_city_graph_quantitative}
-              ],  colors: ['#76AD99','#F47C2F']
-            %>
+          <%else%>
+          <div class="city-box">
+            <h1 class="red"><%=@current_city.name.capitalize%> </h1>
+            <h2>You need €<%=@spending_in_current_city.round(0)%></h2>
+            <p>to live</p>
           </div>
+          <div class="separator"></div>
+          <div class="city-box">
+            <h1 class="green"><%=@destination_city.name.capitalize%> </h1>
+            <h2>You need €<%=@spending_in_dest_city.round(0)%></h2>
+            <p>to live</p>
           </div>
-        </div>
-       <div class="row margin-top">
-        <div class="col-sm-12">
-        <div class="padding color margin-bottom content">
-        <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
-         <% if @user_profile.present? %>
-          <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-          <% else %>
-           <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-          <% end %>
-        </div>
+          <%end%>
         </div>
       </div>
-  </div>
-</div>
+    </div>
+
+
+
+
+
+   <!-- <div class="row margin-top">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <div class="cities-box">
+          <div class="city-box">
+
+            <h1><%=@current_city.name.capitalize%> </h1>
+            <h2>You need €<%=@spending_in_current_city.round(0)%></h2>
+            <p>to live</p>
+          </div>
+          <div class="separator"></div>
+          <div class="city-box">
+            <h1><%=@destination_city.name.capitalize%> </h1>
+            <h2>You need €<%=@spending_in_dest_city.round(0)%></h2>
+            <p>to live</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%else%> -->
+       <!--  <h3 class="content color font padding">We reccomend <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> <br>Your monthly spending in <%= @destination_city.name.capitalize %> would be €<%= @spending_in_dest_city.round(0) %> to maintain your standard of living in <%=@current_city.name.capitalize%>.</h3>
+     -->
+     <div class="row margin-top">
+      <div class="col-sm-12">
+        <div class="color padding content">
+          <h3 class="font">Quality of Life</h3>
+          <%= line_chart [
+            {name: @current_city.name, data: @current_city_graph_lifequality},
+            {name: @destination_city.name, data: @destination_city_graph_lifequality},
+            ], colors: ['#76AD99','#F47C2F']
+            %>
+          </div>
+        </div>
+
+        <div class="col-sm-12 margin-top">
+          <div class="color padding content">
+            <h3 class="font">Cost of Living</h3>
+            <%= line_chart [
+              {name: @current_city.name, data: @current_city_graph_quantitative},
+              {name: @destination_city.name, data: @destination_city_graph_quantitative}
+              ],  colors: ['#76AD99','#F47C2F']
+              %>
+            </div>
+          </div>
+
+        </div>
+       <!--  <div class="row margin-top">
+          <div class="col-sm-12">
+            <div class="padding color margin-bottom content">
+              <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
+              <% if @user_profile.present? %>
+              <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+              <% else %>
+              <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+              <% end %>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
 
