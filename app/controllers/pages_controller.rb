@@ -65,6 +65,12 @@ class PagesController < ApplicationController
     "Rice (white), (1kg), Markets" => ["rice", "<strong>Rice</strong> 1kg"]
   }
 
+  EMOJI_FOR_CITY = {
+    "berlin" => "&#x1F1E9;&#x1F1EA;",
+    "paris" => "&#x1F1EB;&#x1F1F7;",
+    "budapest" => "&#x1F1ED;&#x1F1FA;"
+  }
+
   def home
     @current_city = City.new
     @destination_city = City.new
@@ -86,7 +92,6 @@ class PagesController < ApplicationController
     @destination_city_items_for_display = get_items_for_display(@destionation_city_items)
     @cites_items_for_display = @current_city_items_for_display.zip @destination_city_items_for_display
 
-
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
 
@@ -101,9 +106,16 @@ class PagesController < ApplicationController
     @qual_data_user_profile = [get_qual_data_user_profile(@current_city, @user_profile), get_qual_data_user_profile(@destination_city, @user_profile)]
 
     @spending_in_dest_city = get_spending_in_dest_city
+
+    @current_city_emoji = get_emoji_for_city(@current_city)
+    @destination_city_emoji = get_emoji_for_city(@destination_city)
   end
 
   private
+
+  def get_emoji_for_city(city)
+    EMOJI_FOR_CITY.select { |k, v| return v if k == city.name }
+  end
 
   def get_spending_in_dest_city
     current_city_cpi_and_rent_score = get_indices_hash_for_chart(@current_city_indices)["cpi_and_rent_index"]
@@ -229,7 +241,6 @@ class PagesController < ApplicationController
       items_array << [get_items_array_for_user_profiles[item.item.name], item.item.name, item.price.round(1)]
     end
     return items_array
-    # items_array.select! { |i| get_items_array_for_user_profiles.has_key? i[0] }
   end
 
   def get_items_array_for_user_profiles
