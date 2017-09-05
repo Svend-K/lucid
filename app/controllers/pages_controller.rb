@@ -69,6 +69,9 @@ class PagesController < ApplicationController
     @qual_data_user_profile = [get_qual_data_user_profile(@current_city, @user_profile), get_qual_data_user_profile(@destination_city, @user_profile)]
 
     @spending_in_dest_city = get_spending_in_dest_city
+
+    @current_city_image = get_images(@current_city)
+    @destination_city_image = get_images(@destination_city)
   end
 
   private
@@ -118,6 +121,13 @@ class PagesController < ApplicationController
     full_url = BASE_URL + url
     serialized = open(full_url).read
     json = JSON.parse(serialized)
+  end
+
+  def get_images(city)
+    images_url = "https://api.teleport.org/api/urban_areas/slug:#{city.name}/images"
+    serialized = open(images_url).read
+    json = JSON.parse(serialized)
+    json["photos"][0]["image"]["web"]
   end
 
   def get_city(name)
