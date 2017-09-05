@@ -45,18 +45,36 @@ background-attachment: fixed;
   background-color: rgba(255, 255, 255, 0.7);
 }
 
-.card {
-  height: 250px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  background-size: cover !important;
-  background-position: center;
-  color: white;
-  position: relative;
-  background-color: black;
-  margin-bottom: 25px;
+.card-col {
+  display: flex;
+  justify-content: center;
 }
-.card:hover {
-  opacity: 0.5;
+.card {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  background-position: center;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  background-color: white;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.1);
+}
+.card-hover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #5a6488;
+  color: white;
+  opacity: 0;
+  border-radius: 15px;
+  text-shadow: 1px 1px 2px black;
+}
+.card-hover:hover {
+  opacity: 1;
 }
 .card-category {
   position: absolute;
@@ -64,6 +82,9 @@ background-attachment: fixed;
   left: 10px;
   font-size: 15px;
   text-transform: uppercase;
+  opacity: 0.8;
+  font-weight: lighter;
+  right: 10px;
 }
 .card-description {
   position: absolute;
@@ -71,11 +92,11 @@ background-attachment: fixed;
   left: 10px;
 }
 .card-description h2 {
-  font-size: 24px;
   margin-top: 0px;
+  font-size: 24px;
 }
 .card-description p {
-  font-size: 14px;
-  opacity: 0.7;
   font-weight: lighter;
+  font-size: 20px;
+  opacity: 0.8;
 }

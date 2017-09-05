@@ -38,32 +38,32 @@ class PagesController < ApplicationController
     "Preschool (or Kindergarten), Private, Monthly for 1 Child, Childcare",
   ]
 
-  ITEMS_FOR_WORKER = [
-  "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL), Utilities (Monthly)",
-  "Cinema, International Release, 1 Seat, Sports And Leisure",
-  "Cappuccino (regular), Restaurants",
-  "Basic (Electricity, Heating, Water, Garbage) for 85m2 Apartment, Utilities (Monthly)",
-  "Apartment (1 bedroom) Outside of Centre, Rent Per Month",
-  "Apartment (1 bedroom) in City Centre, Rent Per Month"
-  ]
+  ITEMS_FOR_WORKER = {
+  "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL), Utilities (Monthly)" => ["internet", "<strong>Internet</strong> monthly"],
+  "Cinema, International Release, 1 Seat, Sports And Leisure" => ["cinema", "<strong>Cinema</strong> ticket"],
+  "Cappuccino (regular), Restaurants" => ["coffee", "<strong>Cappuccino</strong> in a restaurant"],
+  "Basic (Electricity, Heating, Water, Garbage) for 85m2 Apartment, Utilities (Monthly)" => ["utilities", "Monthly <strong>utilities</strong>"],
+  "Apartment (1 bedroom) Outside of Centre, Rent Per Month" => ["suburb", "<strong>Rent apartment</strong> outside of city center <strong>per month</strong>"],
+  "Apartment (1 bedroom) in City Centre, Rent Per Month" => ["center", "<strong>Rent apartment</strong> in city center <strong>per month</strong>"]
+  }
 
-  ITEMS_FOR_FAMILY = [
-  "Meal for 2 People, Mid-range Restaurant, Three-course, Restaurants",
-  "Monthly Pass (Regular Price), Transportation",
-  "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price",
-  "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price",
-  "Apartment (3 bedrooms) Outside of Centre, Rent Per Month",
-  "Apartment (3 bedrooms) in City Centre, Rent Per Month"
-   ]
+  ITEMS_FOR_FAMILY = {
+  "Meal for 2 People, Mid-range Restaurant, Three-course, Restaurants" => ["mealmidrange", "<strong>Meal</strong> in mid-range restaurant"],
+  "Monthly Pass (Regular Price), Transportation" => ["transportpass", "Monthly pass for <strong>public transport</strong>"],
+  "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price" => ["suburb", "<strong>Apartment price per sqm</strong> outside of city center"],
+  "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price" => ["center", "<strong>Apartment price per sqm</strong> in city center"],
+  "Apples (1kg), Markets" => ["apple", "<strong>Apple</strong> 1kg"],
+  "Rice (white), (1kg), Markets" => ["rice", "<strong>Rice</strong> 1kg"]
+   }
 
-  ITEMS_FOR_STUDENT = [
-  "Cappuccino (regular), Restaurants",
-  "Domestic Beer (0.5 liter bottle), Markets",
-  "McMeal at McDonalds (or Equivalent Combo Meal), Restaurants",
-  "Apples (1kg), Markets",
-  "Monthly Pass (Regular Price), Transportation",
-  "Rice (white), (1kg), Markets"
-  ]
+  ITEMS_FOR_STUDENT = {
+    "Cappuccino (regular), Restaurants" => ["coffee", "<strong>Cappuccino</strong> in a restaurant"],
+    "Domestic Beer (0.5 liter bottle), Markets" => ["beer", "<strong>Beer</strong> 0.5l from shop"],
+    "McMeal at McDonalds (or Equivalent Combo Meal), Restaurants" => ["mcmeal", "<strong>McMeal</strong> at McDonalds"],
+    "Apples (1kg), Markets" => ["apple", "<strong>Apple</strong> 1kg"],
+    "Monthly Pass (Regular Price), Transportation" => ["transportpass", "Monthly pass for <strong>public transport</strong>"],
+    "Rice (white), (1kg), Markets" => ["rice", "<strong>Rice</strong> 1kg"]
+  }
 
   def home
     @current_city = City.new
@@ -85,6 +85,7 @@ class PagesController < ApplicationController
     @current_city_items_for_display = get_items_for_display(@current_city_items)
     @destination_city_items_for_display = get_items_for_display(@destionation_city_items)
     @cites_items_for_display = @current_city_items_for_display.zip @destination_city_items_for_display
+
 
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
@@ -224,9 +225,11 @@ class PagesController < ApplicationController
   def get_items_for_display(items)
     items_array = []
     items.each do |item|
-      items_array << [item.item.name, item.price.round(1)]
+      next unless get_items_array_for_user_profiles.has_key?(item.item.name)
+      items_array << [get_items_array_for_user_profiles[item.item.name], item.item.name, item.price.round(1)]
     end
-    items_array.select! { |i| get_items_array_for_user_profiles.include? i[0] }
+    return items_array
+    # items_array.select! { |i| get_items_array_for_user_profiles.has_key? i[0] }
   end
 
   def get_items_array_for_user_profiles
