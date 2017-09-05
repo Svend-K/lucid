@@ -1,42 +1,148 @@
 <div class="wrapper">
-      <div class="container">
-      <%= image_tag(@current_city_image) %>
-      <%= image_tag(@destination_city_image) %>
-        <h3 class="content color font padding">We reccomend <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> <br>Your monthly spending in <%= @destination_city.name.capitalize %> would be €<%= @spending_in_dest_city.round(0) %> to maintain your standard of living in <%=@current_city.name.capitalize%>.</h3>
-        <div class="row margin-top">
-          <div class="col-xs-12 col-md-6">
-          <div class="color padding content">
-            <h3 class="font">Quality of Life</h3>
-            <%= line_chart [
-                {name: @current_city.name, data: @current_city_graph_lifequality},
-                {name: @destination_city.name, data: @destination_city_graph_lifequality},
-              ], colors: ['#76AD99','#F47C2F']
-            %>
+  <div class="container">
+    <%= image_tag(@current_city_image) %>
+    <%= image_tag(@destination_city_image) %>
+
+    <table class="table">
+     <tr>
+
+        <td>
+          <%= image_tag("icons8/icons8-DJ.png") %>
+        </td>
+
+        <td>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
           </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+              60%
+            </div>
           </div>
-          <div class="col-xs-12 col-md-6">
-          <div class="color padding content">
-            <h3 class="font">Cost and PP</h3>
-            <%= line_chart [
-                {name: @current_city.name, data: @current_city_graph_quantitative},
-                {name: @destination_city.name, data: @destination_city_graph_quantitative}
-              ],  colors: ['#76AD99','#F47C2F']
-            %>
+        </td>
+
+        <td>
+          <%= image_tag("icons8/icons8-Graduation Cap.png") %>
+        </td>
+
+        <td>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
           </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
           </div>
-        </div>
-       <div class="row margin-top">
-        <div class="col-sm-12">
-        <div class="padding color margin-bottom content">
-        <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
-         <% if @user_profile.present? %>
-          <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-          <% else %>
-           <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-          <% end %>
-        </div>
+        </td>
+
+     </tr>
+     <tr>
+
+        <td>
+          <%= image_tag("icons8/icons8-Public Transportation.png") %>
+        </td>
+
+        <td>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
+          </div>
+        </td>
+
+
+        <td>
+         <%= image_tag("icons8/icons8-Trust.png") %>
+        </td>
+
+        <td>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
+          </div>
+        </td>
+
+     </tr>
+     <tr>
+
+        <td>
+          <%= image_tag("icons8/icons8-Great Britain.png") %>
+        </td>
+
+        <td>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 50%;">
+            60%
+            </div>
+          </div>
+        </td>
+
+     </tr>
+    </table>
+
+    <h3 class="content color font padding">We reccomend <strong><%=@recommended_city.capitalize%></strong> based on your preferences.<br> <br>Your monthly spending in <%= @destination_city.name.capitalize %> would be €<%= @spending_in_dest_city.round(0) %> to maintain your standard of living in <%=@current_city.name.capitalize%>.</h3>
+
+    <div class="row margin-top">
+
+      <div class="col-xs-12 col-md-6">
+        <div class="color padding content">
+          <h3 class="font">Quality of Life</h3>
+          <%= line_chart [
+              {name: @current_city.name, data: @current_city_graph_lifequality},
+              {name: @destination_city.name, data: @destination_city_graph_lifequality},
+            ], colors: ['#76AD99','#F47C2F']
+          %>
         </div>
       </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="color padding content">
+          <h3 class="font">Cost and PP</h3>
+          <%= line_chart [
+              {name: @current_city.name, data: @current_city_graph_quantitative},
+              {name: @destination_city.name, data: @destination_city_graph_quantitative}
+            ],  colors: ['#76AD99','#F47C2F']
+          %>
+        </div>
+      </div>
+
+    </div>
+
+   <div class="row margin-top">
+
+      <div class="col-sm-12">
+        <div class="padding color margin-bottom content">
+          <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
+            <% if @user_profile.present? %>
+          <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+          <% else %>
+          <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
