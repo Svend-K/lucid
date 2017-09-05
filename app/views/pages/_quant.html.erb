@@ -1,0 +1,24 @@
+    <div class="row margin-top">
+      <div class="col-xs-12 col-md-6">
+        <div class="color padding content">
+          <h3 class="font">Quality of Life</h3>
+          <%= line_chart [
+            {name: @current_city.name, data: @current_city_graph_lifequality},
+            {name: @destination_city.name, data: @destination_city_graph_lifequality},
+            ], colors: ['#76AD99','#F47C2F'],
+            curve: false
+            %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="color padding content">
+            <h3 class="font">Cost and PP</h3>
+            <%= line_chart [
+              {name: @current_city.name, data: @current_city_graph_quantitative},
+              {name: @destination_city.name, data: @destination_city_graph_quantitative}
+              ],  colors: ['#76AD99','#F47C2F'],
+              curve: false
+              %>
+            </div>
+          </div>
+        </div>
