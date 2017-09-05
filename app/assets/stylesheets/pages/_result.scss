@@ -1,3 +1,20 @@
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.img1 {
+  position: relative;
+  z-index: 2;
+  right: -20px;
+}
+
+.img2{
+  position: relative;
+  left: -20px;
+}
+
+
 .content-box {
   display: flex;
   justify-content: center;
@@ -44,3 +61,55 @@ background-attachment: fixed;
 .color {
   background-color: rgba(255, 255, 255, 0.7);
 }
+
+.image-cropper {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    // box-shadow:0px 0px 6px grey;
+}
+
+
+.inline {
+   display:inline-block;
+}
+
+.border-right {
+  border-right-style: solid;
+  color: #F4F4F4;
+}
+
+.left-align {
+  text-align: left
+}
+
+.border-transparent {
+  border-right-style: solid;
+  color: #F4F4F4;
+}
+
+
+.cities-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  .separator {
+    border: 1px solid grey;
+    align-self: stretch;
+  }
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+
