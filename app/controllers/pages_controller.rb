@@ -6,6 +6,19 @@ class PagesController < ApplicationController
   NUMBEO_API_KEY = "tzkq1cec4lcm6h"
   BASE_URL = "https://www.numbeo.com"
 
+  API_INDICES_MAPPING = {
+    "crime_index" => "Crime Rate",
+    "traffic_time_index" => "Traffic",
+    "safety_index" => "Safety",
+    "quality_of_life_index" => "Lifequality",
+    "health_care_index" => "Healthcare",
+    "pollution_index" => "Pollution",
+    "rent_index" => "Rent Price",
+    "purchasing_power_incl_rent_index" => "Money Worth",
+    "restaurant_price_index" => "Restaurant Cost",
+    "groceries_index" => "Groceries",
+    "cpi_index" => "Consumer-Price Index",
+  }
   LIFEQUALITY_INDEX_NAMES = [
     "crime_index",
     "traffic_time_index",
@@ -16,7 +29,6 @@ class PagesController < ApplicationController
   ]
 
   QUANTITATIVE_INDEX_NAMES = [
-    "cpi_and_rent_index",
     "purchasing_power_incl_rent_index",
     "restaurant_price_index",
     "cpi_index",
@@ -80,6 +92,7 @@ class PagesController < ApplicationController
     @current_city = get_city(params[:current_city])
     @destination_city = get_city(params[:destination_city])
     @user_profile = params[:user_profile]
+    @spending_in_current_city = params['monthly_spending'].to_i
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
@@ -109,6 +122,9 @@ class PagesController < ApplicationController
 
     @current_city_emoji = get_emoji_for_city(@current_city)
     @destination_city_emoji = get_emoji_for_city(@destination_city)
+
+    @current_city_image = get_images(@current_city)
+    @destination_city_image = get_images(@destination_city)
   end
 
   private
@@ -162,6 +178,13 @@ class PagesController < ApplicationController
     full_url = BASE_URL + url
     serialized = open(full_url).read
     json = JSON.parse(serialized)
+  end
+
+  def get_images(city)
+    images_url = "https://api.teleport.org/api/urban_areas/slug:#{city.name}/images"
+    serialized = open(images_url).read
+    json = JSON.parse(serialized)
+    json["photos"][0]["image"]["mobile"]
   end
 
   def get_city(name)
@@ -254,11 +277,12 @@ class PagesController < ApplicationController
     end
   end
 
-  def get_indices_for_chart(city_indices, index_names)
+  def get_indices_for_chart(city_indices, api_index_names)
     city_hash = get_indices_hash_for_chart(city_indices)
 
-    return index_names.map do |index_name|
-      [index_name, city_hash[index_name]]
+    return api_index_names.map do |api_index_name|
+      index_name = API_INDICES_MAPPING[api_index_name]
+      [index_name, city_hash[api_index_name]]
     end
   end
 
