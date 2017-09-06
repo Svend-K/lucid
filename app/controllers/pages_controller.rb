@@ -36,20 +36,6 @@ class PagesController < ApplicationController
     "groceries_index"
   ]
 
-  ITEMS_TO_EXCLUDE = [
-    "Toyota Corolla 1.6l 97kW Comfort (Or Equivalent New Car), Transportation",
-    "Volkswagen Golf 1.4 90 KW Trendline (Or Equivalent New Car), Transportation",
-    "International Primary School, Yearly for 1 Child, Childcare",
-    "Average Monthly Net Salary (After Tax), Salaries And Financing",
-    "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price",
-    "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price",
-    "Apartment (1 bedroom) Outside of Centre, Rent Per Month",
-    "Apartment (1 bedroom) in City Centre, Rent Per Month",
-    "Apartment (3 bedrooms) Outside of Centre, Rent Per Month",
-    "Apartment (3 bedrooms) in City Centre, Rent Per Month",
-    "Preschool (or Kindergarten), Private, Monthly for 1 Child, Childcare",
-  ]
-
   ITEMS_FOR_WORKER = {
   "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL), Utilities (Monthly)" => ["internet", "<strong>Internet</strong> monthly"],
   "Cinema, International Release, 1 Seat, Sports And Leisure" => ["cinema", "<strong>Cinema</strong> ticket"],
@@ -87,6 +73,20 @@ class PagesController < ApplicationController
     "student" => "&#x1F471;&#x1F392;",
     "worker" => "&#x1F471;&#x1F4BC;",
     "family" => "&#x1F46A;"
+  }
+
+  FACTOR_ICON_NAMES_HASH = {
+    "burocracy" => "burocracy",
+    "friendly to foreigners" => "trust",
+    "fun" => "fun",
+    "nightlife" => "nightlife",
+    "english speaking" => "english",
+    "walkability" => "walkability",
+    "free wi-fi accessibility" => "wifi-strength",
+    "public transport" => "public-transport",
+    "high speed internet availability" => "high-speed-internet",
+    "access to rent" => "access-to-rent",
+    "quality of education" => "education-qual"
   }
 
   def home
@@ -136,6 +136,11 @@ class PagesController < ApplicationController
 
   private
 
+  def get_icon_name_for_qual(name)
+    icon_name = FACTOR_ICON_NAMES_HASH.select { |k, v| return v if k == name }
+    icon_name.empty? ? "" : icon_name
+  end
+
   def get_emoji_for_city(city)
     emoji_code = EMOJI_FOR_CITY.select { |k, v| return v if k == city.name }
     emoji_code.empty? ? "" : emoji_code
@@ -165,7 +170,8 @@ class PagesController < ApplicationController
     user_profile_object.profiles_factors.each { |profilefactor| user_factor_objects << profilefactor.factor }
     user_factor_objects.each do |user_factor_object|
       city.cities_factor.where('factor_id = ?', user_factor_object).each do |cf|
-        current_city_hash[cf.factor.name] = cf.score
+        current_factor_icon_name = get_icon_name_for_qual(cf.factor.name)
+        current_city_hash[cf.factor.name] = {score: cf.score, icon_name: current_factor_icon_name}
       end
     end
     current_city_qual_data = { name: city.name, data: current_city_hash }
