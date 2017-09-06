@@ -36,20 +36,6 @@ class PagesController < ApplicationController
     "groceries_index"
   ]
 
-  ITEMS_TO_EXCLUDE = [
-    "Toyota Corolla 1.6l 97kW Comfort (Or Equivalent New Car), Transportation",
-    "Volkswagen Golf 1.4 90 KW Trendline (Or Equivalent New Car), Transportation",
-    "International Primary School, Yearly for 1 Child, Childcare",
-    "Average Monthly Net Salary (After Tax), Salaries And Financing",
-    "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price",
-    "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price",
-    "Apartment (1 bedroom) Outside of Centre, Rent Per Month",
-    "Apartment (1 bedroom) in City Centre, Rent Per Month",
-    "Apartment (3 bedrooms) Outside of Centre, Rent Per Month",
-    "Apartment (3 bedrooms) in City Centre, Rent Per Month",
-    "Preschool (or Kindergarten), Private, Monthly for 1 Child, Childcare",
-  ]
-
   ITEMS_FOR_WORKER = {
   "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL), Utilities (Monthly)" => ["internet", "<strong>Internet</strong> monthly"],
   "Cinema, International Release, 1 Seat, Sports And Leisure" => ["cinema", "<strong>Cinema</strong> ticket"],
@@ -88,6 +74,8 @@ class PagesController < ApplicationController
     "worker" => "&#x1F471;&#x1F4BC;",
     "family" => "&#x1F46A;"
   }
+
+  FACTOR_ICON_NAMES_HASH = {}
 
   def home
     @current_city = City.new
