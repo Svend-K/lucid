@@ -130,7 +130,8 @@ class PagesController < ApplicationController
   private
 
   def get_emoji_for_city(city)
-    EMOJI_FOR_CITY.select { |k, v| return v if k == city.name }
+    emoji_code = EMOJI_FOR_CITY.select { |k, v| return v if k == city.name }
+    emoji_code.empty? ? "" : emoji_code
   end
 
   def get_spending_in_dest_city
