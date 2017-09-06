@@ -15,30 +15,32 @@
           <div class="cities-box">
             <%if @recommended_city == @current_city.name%>
             <div class="city-box">
-              <h1 class="green"><%=@current_city.name.capitalize%> </h1>
-              <h2>You need €<%=@spending_in_current_city.round(0)%></h2>
-              <p>to live</p>
+              <h1 class="green"><%=@current_city.name.capitalize%> <i class="fa fa-check"></i></h1>
+              <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
             </div>
             <div class="separator"></div>
             <div class="city-box">
-              <h1 class="red"><%=@destination_city.name.capitalize%> </h1>
-              <h2>You need €<%=@spending_in_dest_city.round(0)%></h2>
-              <p>to live</p>
+              <h1 class="red"><%=@destination_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
+              <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
             </div>
             <%else%>
             <div class="city-box">
-              <h1 class="red"><%=@current_city.name.capitalize%> </h1>
-              <h2>You need €<%=@spending_in_current_city.round(0)%></h2>
-              <p>to live</p>
+              <h1 class="red"><%=@current_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
+              <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
             </div>
             <div class="separator"></div>
             <div class="city-box">
-              <h1 class="green"><%=@destination_city.name.capitalize%> </h1>
-              <h2>You need €<%=@spending_in_dest_city.round(0)%></h2>
-              <p>to live</p>
+              <h1 class="green"><%=@destination_city.name.capitalize%> <i class="fa fa-check"></i></h1>
+              <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
             </div>
             <%end%>
           </div>
         </div>
       </div>
+      <a href="#compare">
+ <div class="btn btn-primary" style="width: 100%; margin-top: 10vh;">
+       See Details
+      </div>
+      </a>
     </div>
+
