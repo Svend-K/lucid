@@ -36,6 +36,53 @@ class PagesController < ApplicationController
     "groceries_index"
   ]
 
+  ITEMS_TO_EXCLUDE = [
+    "Toyota Corolla 1.6l 97kW Comfort (Or Equivalent New Car), Transportation",
+    "Volkswagen Golf 1.4 90 KW Trendline (Or Equivalent New Car), Transportation",
+    "International Primary School, Yearly for 1 Child, Childcare",
+    "Average Monthly Net Salary (After Tax), Salaries And Financing",
+    "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price",
+    "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price",
+    "Apartment (1 bedroom) Outside of Centre, Rent Per Month",
+    "Apartment (1 bedroom) in City Centre, Rent Per Month",
+    "Apartment (3 bedrooms) Outside of Centre, Rent Per Month",
+    "Apartment (3 bedrooms) in City Centre, Rent Per Month",
+    "Preschool (or Kindergarten), Private, Monthly for 1 Child, Childcare",
+  ]
+
+  ITEMS_FOR_WORKER = {
+  "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL), Utilities (Monthly)" => ["internet", "<strong>Internet</strong> monthly"],
+  "Cinema, International Release, 1 Seat, Sports And Leisure" => ["cinema", "<strong>Cinema</strong> ticket"],
+  "Cappuccino (regular), Restaurants" => ["coffee", "<strong>Cappuccino</strong> in a restaurant"],
+  "Basic (Electricity, Heating, Water, Garbage) for 85m2 Apartment, Utilities (Monthly)" => ["utilities", "Monthly <strong>utilities</strong>"],
+  "Apartment (1 bedroom) Outside of Centre, Rent Per Month" => ["suburb", "<strong>Rent apartment</strong> outside of city center <strong>per month</strong>"],
+  "Apartment (1 bedroom) in City Centre, Rent Per Month" => ["center", "<strong>Rent apartment</strong> in city center <strong>per month</strong>"]
+  }
+
+  ITEMS_FOR_FAMILY = {
+  "Meal for 2 People, Mid-range Restaurant, Three-course, Restaurants" => ["mealmidrange", "<strong>Meal</strong> in mid-range restaurant"],
+  "Monthly Pass (Regular Price), Transportation" => ["transportpass", "Monthly pass for <strong>public transport</strong>"],
+  "Price per Square Meter to Buy Apartment Outside of Centre, Buy Apartment Price" => ["suburb", "<strong>Apartment price per sqm</strong> outside of city center"],
+  "Price per Square Meter to Buy Apartment in City Centre, Buy Apartment Price" => ["center", "<strong>Apartment price per sqm</strong> in city center"],
+  "Apples (1kg), Markets" => ["apple", "<strong>Apple</strong> 1kg"],
+  "Rice (white), (1kg), Markets" => ["rice", "<strong>Rice</strong> 1kg"]
+   }
+
+  ITEMS_FOR_STUDENT = {
+    "Cappuccino (regular), Restaurants" => ["coffee", "<strong>Cappuccino</strong> in a restaurant"],
+    "Domestic Beer (0.5 liter bottle), Markets" => ["beer", "<strong>Beer</strong> 0.5l from shop"],
+    "McMeal at McDonalds (or Equivalent Combo Meal), Restaurants" => ["mcmeal", "<strong>McMeal</strong> at McDonalds"],
+    "Apples (1kg), Markets" => ["apple", "<strong>Apple</strong> 1kg"],
+    "Monthly Pass (Regular Price), Transportation" => ["transportpass", "Monthly pass for <strong>public transport</strong>"],
+    "Rice (white), (1kg), Markets" => ["rice", "<strong>Rice</strong> 1kg"]
+  }
+
+  EMOJI_FOR_CITY = {
+    "berlin" => "&#x1F1E9;&#x1F1EA;",
+    "paris" => "&#x1F1EB;&#x1F1F7;",
+    "budapest" => "&#x1F1ED;&#x1F1FA;"
+  }
+
   def home
     @current_city = City.new
     @destination_city = City.new
@@ -45,21 +92,24 @@ class PagesController < ApplicationController
     @current_city = get_city(params[:current_city])
     @destination_city = get_city(params[:destination_city])
     @user_profile = params[:user_profile]
+    @spending_in_current_city = params['monthly_spending'].to_i
 
     # there's no city like that in numbeo db OR cannot add same cities THEN note the user
     if @current_city.nil? || @destination_city.nil? || @current_city == @destination_city
       redirect_to root_path and return
     end
 
-    get_items_for_city(@current_city)
-    get_items_for_city(@destination_city)
+    @current_city_items = get_items_for_city(@current_city)
+    @destionation_city_items = get_items_for_city(@destination_city)
+    @current_city_items_for_display = get_items_for_display(@current_city_items)
+    @destination_city_items_for_display = get_items_for_display(@destionation_city_items)
+    @cites_items_for_display = @current_city_items_for_display.zip @destination_city_items_for_display
 
     @current_city_indices = get_indices_for_city(@current_city)
     @destination_city_indices = get_indices_for_city(@destination_city)
 
     @current_city_graph_lifequality = get_indices_for_chart(@current_city_indices, LIFEQUALITY_INDEX_NAMES)
     @destination_city_graph_lifequality = get_indices_for_chart(@destination_city_indices, LIFEQUALITY_INDEX_NAMES)
-
     @current_city_graph_quantitative = get_indices_for_chart(@current_city_indices, QUANTITATIVE_INDEX_NAMES)
     @destination_city_graph_quantitative = get_indices_for_chart(@destination_city_indices, QUANTITATIVE_INDEX_NAMES)
 
@@ -70,11 +120,19 @@ class PagesController < ApplicationController
 
     @spending_in_dest_city = get_spending_in_dest_city
 
+    @current_city_emoji = get_emoji_for_city(@current_city)
+    @destination_city_emoji = get_emoji_for_city(@destination_city)
+
     @current_city_image = get_images(@current_city)
     @destination_city_image = get_images(@destination_city)
   end
 
   private
+
+  def get_emoji_for_city(city)
+    emoji_code = EMOJI_FOR_CITY.select { |k, v| return v if k == city.name }
+    emoji_code.empty? ? "" : emoji_code
+  end
 
   def get_spending_in_dest_city
     current_city_cpi_and_rent_score = get_indices_hash_for_chart(@current_city_indices)["cpi_and_rent_index"]
@@ -127,7 +185,7 @@ class PagesController < ApplicationController
     images_url = "https://api.teleport.org/api/urban_areas/slug:#{city.name}/images"
     serialized = open(images_url).read
     json = JSON.parse(serialized)
-    json["photos"][0]["image"]["web"]
+    json["photos"][0]["image"]["mobile"]
   end
 
   def get_city(name)
@@ -197,6 +255,26 @@ class PagesController < ApplicationController
       current_city.name
     else
       destination_city.name
+    end
+  end
+
+  def get_items_for_display(items)
+    items_array = []
+    items.each do |item|
+      next unless get_items_array_for_user_profiles.has_key?(item.item.name)
+      items_array << [get_items_array_for_user_profiles[item.item.name], item.item.name, item.price.round(1)]
+    end
+    return items_array
+  end
+
+  def get_items_array_for_user_profiles
+    user_profile = params['user_profile']
+    if user_profile == "worker"
+      return ITEMS_FOR_WORKER
+    elsif user_profile == "family"
+      return ITEMS_FOR_FAMILY
+    elsif user_profile == "student"
+      return ITEMS_FOR_STUDENT
     end
   end
 

@@ -1,3 +1,21 @@
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+.img1 {
+  position: relative;
+  z-index: 2;
+  right: -20px;
+}
+
+.img2{
+  position: relative;
+  left: -20px;
+}
+
+
 .content-box {
   display: flex;
   justify-content: center;
@@ -43,4 +61,110 @@ background-attachment: fixed;
 
 .color {
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+.card-col {
+  display: flex;
+  justify-content: center;
+}
+.card {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  background-position: center;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  background-color: white;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.1);
+}
+.card-hover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #364F6B;
+  color: white;
+  opacity: 0;
+  border-radius: 15px;
+  text-shadow: 1px 1px 2px black;
+}
+.card-hover:hover {
+  opacity: 1;
+}
+.card-category {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  font-weight: lighter;
+  right: 10px;
+}
+.card-description {
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+}
+.card-description h2 {
+  margin-top: 0px;
+  font-size: 24px;
+}
+.card-description p {
+  font-weight: lighter;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.image-cropper {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    // box-shadow:0px 0px 6px grey;
+}
+
+
+.inline {
+   display:inline-block;
+}
+
+.border-right {
+  border-right-style: solid;
+  color: #F4F4F4;
+}
+
+.left-align {
+  text-align: left
+}
+
+.border-transparent {
+  border-right-style: solid;
+  color: #F4F4F4;
+}
+
+
+.cities-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  .separator {
+    border: 1px solid grey;
+    align-self: stretch;
+  }
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
 }
