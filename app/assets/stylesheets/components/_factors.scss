@@ -1,0 +1,10 @@
+.qualitative-factor {
+  display: flex;
+  align-items: center;
+
+  .progress-bars {
+    flex-grow: 1;
+    margin-top: 25px;
+    margin-left: 10px;
+  }
+}
