@@ -83,9 +83,16 @@ class PagesController < ApplicationController
     "budapest" => "&#x1F1ED;&#x1F1FA;"
   }
 
+  EMOJI_FOR_PROFILE = {
+    "student" => "&#x1F471;&#x1F392;",
+    "worker" => "&#x1F471;&#x1F4BC;",
+    "family" => "&#x1F46A;"
+  }
+
   def home
     @current_city = City.new
     @destination_city = City.new
+    @emoji_for_profiles = EMOJI_FOR_PROFILE
   end
 
   def result

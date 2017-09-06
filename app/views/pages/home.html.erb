@@ -3,41 +3,12 @@
   <div class="map-form">
     <h1>Lucid</h1>
     <h2>Find the best place to work and live in intelligently</h2>
-    <!-- <p>Compare cities on quality of life, costs of living, salaries and more</p> -->
-    <form action="/result" method="GET" class="form-inline">
-      <div class="form-group">
-        <input name="current_city" type="text" id="current_city" placeholder="Where do you live?" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <input name="destination_city" type="text" id="destination_city" placeholder="Where are you headed?" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <input name="monthly_spending" type="text" id="current_city" placeholder="EUR monthly spending" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <!-- <input name="user_profile" type="text" id="user_profile" placeholder="Your monthly spending" class="form-control"> -->
- <!--        <select class="form-control" name="user_profile">
-          <option value="freelancer">Freelancer</option>
-          <option value="student">Student</option>
-          <option value="family">Family</option>
-        </select> -->
-        <select class="form-control" name="user_profile">
-          <% Profile.all.each do |profile| %>
-            <option value="<%=profile.name%>">
-              <%=profile.name.capitalize%>
-            </option>
-          <% end %>
-        </select>
-      </div>
+    <%= render 'pages/homeform' %>
 
-
-      <br><br>
-      <input type="submit" value="Compare" class="btn btn-primary">
-    </form>
   </div>
 
   <div class="map-bg" style="background-image: url(http://res.cloudinary.com/slzr/image/upload/v1500321012/world-map-1500_vvekl5.png"></div>
-<div class="point venezuela tippy" title="Venezuela"></div>
+  <div class="point venezuela tippy" title="Venezuela"></div>
   <div class="point brasil tippy" title="Brasil"></div>
   <div class="point argentina tippy" title="Argentina"></div>
   <div class="point colombia tippy" title="Colombia"></div>
