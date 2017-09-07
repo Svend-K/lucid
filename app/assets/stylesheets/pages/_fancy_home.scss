@@ -92,7 +92,8 @@ display: none;
   z-index: 100;
   width: 80%;
   left: 50%;
-  margin-left: -40%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   // background-color: rgba(62,194,210, 0.2);
   background-color: rgba(241, 241, 241, 0.61);
   box-shadow: 3px 3px 4px 4px rgba(0,0,0,0.2);
@@ -100,8 +101,6 @@ display: none;
   border-radius: 25px;
   padding: 30px;
   text-align: center;
-  top: 50vh;
-  margin-top: -150px;
   h1 {
     margin-top: 0px;
     font-family: $logo-font;
