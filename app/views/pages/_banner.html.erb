@@ -1,10 +1,9 @@
 <div class="banner-container ">
 
   <div class="image-container margin-top">
-    <div class="image-cropper inline img1" style="background-image: url(<%= image_path(@current_city_image) %>)">
-
+    <div class="image-cropper inline img1" style="background-image: url(<%= image_path(@current_city_image.nil? ? 'city_placeholder.png' : @current_city_image) %>)">
     </div>
-    <div class="image-cropper inline img2" style="background-image: url(<%= image_path(@destination_city_image) %>)">
+    <div class="image-cropper inline img2" style="background-image: url(<%= image_path(@destination_city_image.nil? ? 'city_placeholder.png' : @destination_city_image) %>)">
 
     </div>
   </div>
