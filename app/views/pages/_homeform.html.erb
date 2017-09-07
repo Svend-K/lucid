@@ -15,7 +15,7 @@
     <% @emoji_for_profiles.each do |k,v| %>
         <% if k == "worker" %>
         <label class="btn btn-primary profile">
-        <input class="form-check-input" name="user_profile" type="radio" checked="checked" id="myuserprofile-<%= k %>" value="<%= k %>">
+        <input class="form-check-input" name="user_profile" type="radio" §checked="checked" id="myuserprofile-<%= k %>" value="<%= k %>">
           <%= v.html_safe%><%=k.capitalize%>
         </label>
         <% else %>
