@@ -13,22 +13,18 @@
           <%if @recommended_city == @current_city.name%>
           <div class="city-box">
             <h1 class="green"><span class="city"><%=@current_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-check"></i></span></h1>
-            <p>You need <strong>€<%=@spending_in_current_city.round(0)%></strong> to live</p>
           </div>
           <div class="separator"></div>
           <div class="city-box">
             <h1 class="red"><span class="city"><%=@destination_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-times" aria-hidden="true"></span></i></h1>
-            <p>You need <strong>€<%=@spending_in_dest_city.round(0)%></strong> to live </p>
           </div>
           <%else%>
           <div class="city-box">
             <h1 class="red"><span class="city"><%=@current_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-times" aria-hidden="true"></span></i></h1>
-            <p>You need  <strong>€<%=@spending_in_current_city.round(0)%></strong> to live</p>
           </div>
           <div class="separator"></div>
           <div class="city-box">
             <h1 class="green"><span class="city"><%=@destination_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-check"></i></span></h1>
-            <p>You need  <strong>€<%=@spending_in_dest_city.round(0)%></strong> to live </p>
           </div>
           <%end%>
         </div>

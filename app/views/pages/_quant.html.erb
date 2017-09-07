@@ -29,6 +29,13 @@
         </div>
       </div>
     </div>
+    <p>
+      <% if @spending_in_current_city && @spending_in_dest_city %>
+      <small>
+        In average, you need <strong>€<%=@spending_in_current_city.round(0)%></strong> to live in <%= @current_city.name %> and <strong>€<%=@spending_in_dest_city.round(0)%></strong> to live in <%= @destination_city.name %>
+      </small>
+      <% end %>
+    </p>
   </div>
 
   <a href="#facts" class="scrolldown-button">
