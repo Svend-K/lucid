@@ -37,6 +37,6 @@
 
     <%= yield(:after_js) %>
 
-    <%= render 'shared/footer' %>
+    <%= render 'shared/footer'  unless @skip_footer%>
   </body>
 </html>

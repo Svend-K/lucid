@@ -93,6 +93,7 @@ class PagesController < ApplicationController
     @current_city = City.new
     @destination_city = City.new
     @emoji_for_profiles = EMOJI_FOR_PROFILE
+    @skip_footer = true
   end
 
   def result
