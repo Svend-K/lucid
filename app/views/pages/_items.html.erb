@@ -1,4 +1,5 @@
-<div class="page-wrapper" id="costs">
+<span id="costs" class="page-size">
+<div class="page-wrapper" >
   <div class="title">
     <h1>Cost of Items</h1>
   </div>
@@ -8,7 +9,7 @@
         <% @cites_items_for_display.each do |i| %>
         <div class="col-xs-12 col-sm-4 card-col">
           <div class="card">
-            <div class="front" style="background-image:linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.25)), url('<%= image_path "items/#{i[0][0][0]}.png"%>');"> 
+            <div class="front" style="background-image:linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.25)), url('<%= image_path "items/#{i[0][0][0]}.png"%>');">
             </div>
             <div class="back card-description">
               <div class="card-back-title">
@@ -22,7 +23,7 @@
                 <div class="card-city">
                   <span class="city-name"><%= @destination_city_emoji.html_safe %> <%= @destination_city.name.capitalize %></span> <span class="city-item-price"><%= i[1][2] %> EUR</span>
                 </div>
-              </div>              
+              </div>
             </div>
           </div>
         </div>
@@ -38,3 +39,4 @@
   });
 </script>
 <% end %>
+</span>
