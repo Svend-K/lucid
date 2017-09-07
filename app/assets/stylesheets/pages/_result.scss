@@ -182,7 +182,7 @@ background-attachment: fixed;
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  height: 30vh;
+  height: 25vh;
   .separator {
     border: 1px solid #e6e6e6;
     align-self: stretch;
@@ -207,9 +207,18 @@ background-attachment: fixed;
   }
 }
 
-.banner-container {
-  height: 91vh;
+.banner-size {
+  display: flex;
+  justify-content: center;
+  height: 90vh;
+  position: relative;
+  align-items: center;
+}
 
+.banner-container {
+  width: 100%;
+  position: absolute;
+  bottom: 20%;
   p{
   color: #676666;
   }
@@ -217,9 +226,6 @@ background-attachment: fixed;
 
 .page-wrapper {
   // height: 100vh;
-  min-height: 100vh;
-  border-top: 1px solid;
-  position:relative;
   text-align: center;
 }
 
@@ -271,5 +277,12 @@ background-attachment: fixed;
 
 .table {
   margin-right: 5px;
+}
 
+.page-size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
 }
