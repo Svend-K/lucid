@@ -5,6 +5,20 @@ $primary: #00acc1;
 //   opacity: 0.5;
 //   }
 
+[type='radio'] {
+display: none;
+}
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-left: -9px;
+}
+
+.profile-form {
+  display: flex;
+  justify-content: space-between;
+}
+
 .map-container {
   margin-top: -70px;
   position: relative;
@@ -80,7 +94,7 @@ $primary: #00acc1;
   left: 50%;
   margin-left: -40%;
   // background-color: rgba(62,194,210, 0.2);
-  background-color: transparent;
+  background-color: rgba(241, 241, 241, 0.61);
   box-shadow: 3px 3px 4px 4px rgba(0,0,0,0.2);
   // border: 2px solid;
   border-radius: 25px;
@@ -105,3 +119,28 @@ $primary: #00acc1;
   }
 }
 
+#current_city {
+   width: 190px;
+   text-align: center;
+}
+
+#destination_city {
+  text-align: center;
+}
+
+
+.profile {
+  background-color: white !important;
+  width: 200px;
+  box-shadow: 0px 0px 5px grey !important;
+  margin: 0 5px;
+}
+
+.profile.active {
+  background-color: rgba(100, 100, 100, 0.4) !important; /* add here any color */
+}
+
+
+// // #form-group-2 {
+// //   width: 300px
+// // }

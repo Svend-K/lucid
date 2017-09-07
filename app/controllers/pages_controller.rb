@@ -70,8 +70,8 @@ class PagesController < ApplicationController
   }
 
   EMOJI_FOR_PROFILE = {
-    "student" => "&#x1F471;&#x1F392;",
     "worker" => "&#x1F471;&#x1F4BC;",
+    "student" => "&#x1F471;&#x1F392;",
     "family" => "&#x1F46A;"
   }
 
