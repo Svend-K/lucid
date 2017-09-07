@@ -1,46 +1,46 @@
 <div class="banner-container ">
 
-      <div class="image-container margin-top">
-        <div class="image-cropper inline img1" style="background-image: url(<%= image_path(@current_city_image) %>)">
+  <div class="image-container margin-top">
+    <div class="image-cropper inline img1" style="background-image: url(<%= image_path(@current_city_image) %>)">
 
-        </div>
-        <div class="image-cropper inline img2" style="background-image: url(<%= image_path(@destination_city_image) %>)">
-
-        </div>
-      </div>
-
-
-      <div class="row margin-top">
-        <div class="col-xs-12 col-md-8 col-md-offset-2">
-          <div class="cities-box">
-            <%if @recommended_city == @current_city.name%>
-            <div class="city-box">
-              <h1 class="green"><%=@current_city.name.capitalize%> <i class="fa fa-check"></i></h1>
-              <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
-            </div>
-            <div class="separator"></div>
-            <div class="city-box">
-              <h1 class="red"><%=@destination_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
-              <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
-            </div>
-            <%else%>
-            <div class="city-box">
-              <h1 class="red"><%=@current_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
-              <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
-            </div>
-            <div class="separator"></div>
-            <div class="city-box">
-              <h1 class="green"><%=@destination_city.name.capitalize%> <i class="fa fa-check"></i></h1>
-              <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
-            </div>
-            <%end%>
-          </div>
-        </div>
-      </div>
-      <a href="#compare">
- <div class="btn btn-primary" style="width: 100%; margin-top: 10vh;">
-       See Details
-      </div>
-      </a>
     </div>
+    <div class="image-cropper inline img2" style="background-image: url(<%= image_path(@destination_city_image) %>)">
+
+    </div>
+  </div>
+
+
+  <div class="row margin-top">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <div class="cities-box">
+        <%if @recommended_city == @current_city.name%>
+        <div class="city-box">
+          <h1 class="green"><%=@current_city.name.capitalize%> <i class="fa fa-check"></i></h1>
+          <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
+        </div>
+        <div class="separator"></div>
+        <div class="city-box">
+          <h1 class="red"><%=@destination_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
+          <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
+        </div>
+        <%else%>
+        <div class="city-box">
+          <h1 class="red"><%=@current_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
+          <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
+        </div>
+        <div class="separator"></div>
+        <div class="city-box">
+          <h1 class="green"><%=@destination_city.name.capitalize%> <i class="fa fa-check"></i></h1>
+          <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
+        </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+  <a href="#compare">
+   <div class="btn btn-primary" style="width: 100%; margin-top: 10vh;">
+     See Details
+   </div>
+ </a>
+</div>
 
