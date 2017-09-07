@@ -1,12 +1,12 @@
 
 <div class="page-wrapper" id="compare">
  <div class="title">
-   <h1>Cities Comparison</h1>
+   <h1>How do <%= @current_city.name.capitalize %> and <%= @destination_city.name.capitalize %> compare? </h1>
  </div>
  <div class="row margin-top">
   <div class="col-xs-12 col-md-6">
     <div class="color padding content">
-      <h3 class="font">😎 Quality of Life</h3>
+      <h3 class="font">😎 Quality of Life 😎</h3>
       <%= line_chart [
         {name: @current_city.name, data: @current_city_graph_lifequality},
         {name: @destination_city.name, data: @destination_city_graph_lifequality},
@@ -17,7 +17,7 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <div class="color padding content">
-        <h3 class="font">💵 Cost of Living</h3>
+        <h3 class="font">💵 Cost of Living 💵</h3>
         <%= line_chart [
           {name: @current_city.name, data: @current_city_graph_quantitative},
           {name: @destination_city.name, data: @destination_city_graph_quantitative}
@@ -27,9 +27,7 @@
         </div>
       </div>
     </div>
-    <a href="#facts">
-     <div class="scrolldown">
-       <i class="fa fa-chevron-down" aria-hidden="true"></i>
-     </div>
-   </a>
+    <a href="#facts" class="scrolldown-button">
+      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+    </a>
  </div>

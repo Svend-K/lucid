@@ -14,31 +14,31 @@
       <div class="cities-box">
         <%if @recommended_city == @current_city.name%>
         <div class="city-box">
-          <h1 class="green"><%=@current_city.name.capitalize%> <i class="fa fa-check"></i></h1>
-          <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
+          <h1 class="green"><span class="city"><%=@current_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-check"></i></span></h1>
+          <p>You need <strong>€<%=@spending_in_current_city.round(0)%></strong> to live</p>
         </div>
         <div class="separator"></div>
         <div class="city-box">
-          <h1 class="red"><%=@destination_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
-          <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
+          <h1 class="red"><span class="city"><%=@destination_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-times" aria-hidden="true"></span></i></h1>
+          <p>You need <strong>€<%=@spending_in_dest_city.round(0)%></strong> to live </p>
         </div>
         <%else%>
         <div class="city-box">
-          <h1 class="red"><%=@current_city.name.capitalize%> <i class="fa fa-times" aria-hidden="true"></i></h1>
-          <p>You need €<%=@spending_in_current_city.round(0)%> to live</p>
+          <h1 class="red"><span class="city"><%=@current_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-times" aria-hidden="true"></span></i></h1>
+          <p>You need  <strong>€<%=@spending_in_current_city.round(0)%></strong> to live</p>
         </div>
         <div class="separator"></div>
         <div class="city-box">
-          <h1 class="green"><%=@destination_city.name.capitalize%> <i class="fa fa-check"></i></h1>
-          <p>You need €<%=@spending_in_dest_city.round(0)%> to live </p>
+          <h1 class="green"><span class="city"><%=@destination_city.name.capitalize%></span> <span class="circle-icon"><i class="fa fa-check"></i></span></h1>
+          <p>You need  <strong>€<%=@spending_in_dest_city.round(0)%></strong> to live </p>
         </div>
         <%end%>
       </div>
     </div>
   </div>
-  <a href="#compare">
-   <div class="btn btn-primary" style="width: 100%; margin-top: 10vh;">
-     See Details
+  <a href="#compare" style="display: flex; justify-content: center;">
+   <div class="btn btn-primary" style="width: 50%; margin-top: 5vh;padding: 20px;font-size: 20px;font-weight: bolder; ">
+     Show me more
    </div>
  </a>
 </div>
