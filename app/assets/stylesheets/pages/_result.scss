@@ -210,17 +210,15 @@ background-attachment: fixed;
 .banner-size {
   display: flex;
   justify-content: center;
-  height: 90vh;
-  position: relative;
+  height: 100vh;
+  margin-top: -70px;
   align-items: center;
 }
 
 .banner-container {
   width: 100%;
-  position: absolute;
-  bottom: 20%;
   p{
-  color: #676666;
+    color: #676666;
   }
 }
 
@@ -235,7 +233,7 @@ background-attachment: fixed;
   text-align: center;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 60px;
+  font-size: 40px;
   color: rgba(0,0,0,0.3);
   // margin-top: 10vh;
 }
@@ -285,4 +283,9 @@ background-attachment: fixed;
   justify-content: center;
   height: 100vh;
   position: relative;
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    margin-top: 20px;
+  }
 }
