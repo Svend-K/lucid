@@ -197,9 +197,13 @@ class PagesController < ApplicationController
 
   def get_images(city)
     images_url = "https://api.teleport.org/api/urban_areas/slug:#{city.name}/images"
-    serialized = open(images_url).read
-    json = JSON.parse(serialized)
-    city_pic = json["photos"][0]["image"]["mobile"]
+    begin
+      serialized = open(images_url).read
+    rescue OpenURI::HTTPError
+    else
+      json = JSON.parse(serialized)
+      city_pic = json["photos"][0]["image"]["mobile"]
+    end
   end
 
   def get_city(name)
