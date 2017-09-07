@@ -265,11 +265,13 @@ class PagesController < ApplicationController
   end
 
   def get_recommended_city(current_city, destination_city)
-    index = Index.find_by(name: "purchasing_power_incl_rent_index")
+    # we used earlier
+    # purchasing_power_incl_rent_index
+    index = Index.find_by(name: "cpi_and_rent_index")
     current_city_score = CitiesIndex.find_by(index_id: index.id, city_id:current_city.id).score
     destination_city_score = CitiesIndex.find_by(index_id: index.id, city_id:destination_city.id).score
 
-    if current_city_score > destination_city_score
+    if current_city_score < destination_city_score
       current_city.name
     else
       destination_city.name

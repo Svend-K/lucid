@@ -40,61 +40,61 @@ attr = {
                           {profile_id: 3, factor_id: 8},
                           {profile_id: 3, factor_id: 6}],
         city: [{name: "london"},
-               {name: "barcelona"},
+               {name: "paris"},
                {name: "berlin"}],
                         #burocracy
         cities_factor: [{city_id: 1, factor_id: 1, score: 0.80},#london
-                        {city_id: 2, factor_id: 1, score: 0.55},#barcelona
+                        {city_id: 2, factor_id: 1, score: 0.55},#paris
                         {city_id: 3, factor_id: 1, score: 0.85},#berlin
 
                         #friendly to foreigners
                         {city_id: 1, factor_id: 2, score: 0.9},#london
-                        {city_id: 2, factor_id: 2, score: 0.7},#barcelona
+                        {city_id: 2, factor_id: 2, score: 0.7},#paris
                         {city_id: 3, factor_id: 2, score: 0.9},#berlin
 
                         #fun
                         {city_id: 1, factor_id: 3, score: 0.9},#london
-                        {city_id: 2, factor_id: 3, score: 0.85},#barcelona
+                        {city_id: 2, factor_id: 3, score: 0.85},#paris
                         {city_id: 3, factor_id: 3, score: 0.95},#berlin
 
                         #nightlife
                         {city_id: 1, factor_id: 4, score: 0.65},#london
-                        {city_id: 2, factor_id: 4, score: 0.65},#barcelona
+                        {city_id: 2, factor_id: 4, score: 0.65},#paris
                         {city_id: 3, factor_id: 4, score: 0.8},#berlin
 
                         #english speaking
                         {city_id: 1, factor_id: 5, score: 1.0},#london
-                        {city_id: 2, factor_id: 5, score: 0.5},#barcelona
+                        {city_id: 2, factor_id: 5, score: 0.3},#paris
                         {city_id: 3, factor_id: 5, score: 0.95},#berlin
 
                         #walkability
                         {city_id: 1, factor_id: 6, score: 0.4},#london
-                        {city_id: 2, factor_id: 6, score: 0.5},#barcelona
+                        {city_id: 2, factor_id: 6, score: 0.5},#paris
                         {city_id: 3, factor_id: 6, score: 0.6},#berlin
 
                         #free wi-fi accessibility
                         {city_id: 1, factor_id: 7, score: 0.6},#london
-                        {city_id: 2, factor_id: 7, score: 0.5},#barcelona
+                        {city_id: 2, factor_id: 7, score: 0.5},#paris
                         {city_id: 3, factor_id: 7, score: 0.8},#berlin
 
                         #public transport
                         {city_id: 1, factor_id: 8, score: 0.65},#london
-                        {city_id: 2, factor_id: 8, score: 0.55},#barcelona
+                        {city_id: 2, factor_id: 8, score: 0.55},#paris
                         {city_id: 3, factor_id: 8, score: 0.95},#berlin
 
                         #high speed internet availability
                         {city_id: 1, factor_id: 9, score: 0.7},#london
-                        {city_id: 2, factor_id: 9, score: 0.65},#barcelona
+                        {city_id: 2, factor_id: 9, score: 0.65},#paris
                         {city_id: 3, factor_id: 9, score: 0.8},#berlin
 
                         #access to rent
                         {city_id: 1, factor_id: 10, score: 0.2},#london
-                        {city_id: 2, factor_id: 10, score: 0.5},#barcelona
+                        {city_id: 2, factor_id: 10, score: 0.5},#paris
                         {city_id: 3, factor_id: 10, score: 0.6},#berlin
 
                         #quality of education
                         {city_id: 1, factor_id: 11, score: 0.9},#london
-                        {city_id: 2, factor_id: 11, score: 0.6},#barcelona
+                        {city_id: 2, factor_id: 11, score: 0.6},#paris
                         {city_id: 3, factor_id: 11, score: 0.9}#berlin
                       ]
        }
