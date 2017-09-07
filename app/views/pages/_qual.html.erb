@@ -1,12 +1,12 @@
 <div class="row margin-top">
-          <div class="col-sm-12">
-            <div class="padding color margin-bottom content">
-              <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
-              <% if @user_profile.present? %>
-              <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-              <% else %>
-              <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+  <div class="col-sm-12">
+    <div class="padding color margin-bottom content">
+      <h3 class="font">Important factors to consider for a <%=@user_profile%></h3>
+      <% if @user_profile.present? %>
+      <%= column_chart @qual_data_user_profile, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+      <% else %>
+      <%= column_chart @qual_data, colors: ['#76AD99','#F47C2F'], library: {backgroundColor: "#FFF", height: 265} %>
+      <% end %>
+    </div>
+  </div>
+</div>
