@@ -66,7 +66,8 @@ class PagesController < ApplicationController
   EMOJI_FOR_CITY = {
     "berlin" => "&#x1F1E9;&#x1F1EA;",
     "paris" => "&#x1F1EB;&#x1F1F7;",
-    "budapest" => "&#x1F1ED;&#x1F1FA;"
+    "budapest" => "&#x1F1ED;&#x1F1FA;",
+    "london" => "&#x1F1EC;&#x1F1E7;"
   }
 
   EMOJI_FOR_PROFILE = {
