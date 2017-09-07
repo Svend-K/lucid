@@ -119,8 +119,8 @@ background-attachment: fixed;
 }
 
 .image-cropper {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 5px solid white;
     box-shadow: 0px 0px 5px grey;
     position: relative;
@@ -158,21 +158,27 @@ background-attachment: fixed;
   text-align: center;
   height: 30vh;
   .separator {
-    border: 1px solid grey;
+    border: 1px solid #e6e6e6;
     align-self: stretch;
   }
 }
 
 .red {
-  color: #d84f4f;;
-  font-size: 27px;
+  display: flex;
+  align-items: center;
   font-weight: 800;
+  .circle-icon {
+    background-color: $red;
+  }
 }
 
 .green {
-  color: #149c14;
-  font-size: 27px;
+  display: flex;
+  align-items: center;
   font-weight: 800;
+  .circle-icon {
+    background-color: $green;
+  }
 }
 
 .banner-container {
@@ -195,6 +201,10 @@ background-attachment: fixed;
   position: absolute;
   bottom: 5px;
   text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 60px;
+  color: rgba(0,0,0,0.3);
   // margin-top: 10vh;
 }
 
@@ -203,11 +213,31 @@ background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  h1 {
-    font-size: 23px;
-  }
+}
+.city-box p {
+  font-size: 27px;
+  font-weight: 300;
+}
+.city-box .city {
+  padding-right: 10px;
+}
+.city-box h1 {
+  font-size: 45px;
+  justify-content: space-around;
 }
 
+
+.circle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 16px;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+
+}
 .table-text {
   font-weight: 300;
   font-size: 14px;

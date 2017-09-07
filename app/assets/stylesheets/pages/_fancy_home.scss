@@ -114,18 +114,12 @@ display: none;
   .btn.btn-primary {
     background-color:rgb(103, 207, 220);
     border-radius: 10px;
-    opacity: 0.9;
     color: black;
   }
 }
 
 #current_city {
    width: 190px;
-   text-align: center;
-}
-
-#destination_city {
-  text-align: center;
 }
 
 
@@ -134,10 +128,13 @@ display: none;
   width: 200px;
   box-shadow: 0px 0px 5px grey !important;
   margin: 0 5px;
+  background-color: rgba(160, 160, 160, 0.4) !important;
+  opacity: 0.5;
 }
 
 .profile.active {
-  background-color: rgba(100, 100, 100, 0.4) !important; /* add here any color */
+  background-color: white !important; /* add here any color */
+  opacity: 1;
 }
 
 
