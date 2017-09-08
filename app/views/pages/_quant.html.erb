@@ -9,23 +9,43 @@
       <div class="col-xs-12 col-md-6">
         <div class="color content">
           <h3 class="font">😎 Quality of Life 😎</h3>
+          <% if @current_city.name == @recommended_city %>
           <%= line_chart [
             {name: @current_city.name, data: @current_city_graph_lifequality},
             {name: @destination_city.name, data: @destination_city_graph_lifequality},
             ], colors: ['#76AD99','#F47C2F'],
             curve: false
             %>
+          <% else %>
+          <%= line_chart [
+            {name: @current_city.name, data: @current_city_graph_lifequality},
+            {name: @destination_city.name, data: @destination_city_graph_lifequality},
+            ], colors: ['#F47C2F','#76AD99'],
+            curve: false
+            %>
+          <% end %>
+
         </div>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="color content">
           <h3 class="font">💵 Cost of Living 💵</h3>
+          <% if @current_city.name == @recommended_city %>
           <%= line_chart [
             {name: @current_city.name, data: @current_city_graph_quantitative},
-            {name: @destination_city.name, data: @destination_city_graph_quantitative}
-            ],  colors: ['#76AD99','#F47C2F'],
+            {name: @destination_city.name, data: @destination_city_graph_quantitative},
+            ], colors: ['#76AD99','#F47C2F'],
             curve: false
             %>
+          <% else %>
+          <%= line_chart [
+            {name: @current_city.name, data: @current_city_graph_quantitative},
+            {name: @destination_city.name, data: @destination_city_graph_quantitative},
+            ], colors: ['#F47C2F','#76AD99'],
+            curve: false
+            %>
+          <% end %>
+
         </div>
       </div>
     </div>

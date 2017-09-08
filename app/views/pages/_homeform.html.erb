@@ -16,12 +16,12 @@
         <% if k == "worker" %>
         <label class="btn btn-primary profile">
         <input class="form-check-input" name="user_profile" type="radio" id="myuserprofile-<%= k %>" value="<%= k %>" >
-          <%= v.html_safe%><%=k.capitalize%>
+          <%= v.html_safe%> <%=k.capitalize%>
         </label>
         <% else %>
         <label class="btn btn-primary profile">
         <input class="form-check-input" name="user_profile" type="radio" id="myuserprofile-<%= k %>" value="<%= k %>">
-          <%= v.html_safe%><%=k.capitalize%>
+          <%= v.html_safe%> <%=k.capitalize%>
         </label>
       <% end %>
     <% end %>
